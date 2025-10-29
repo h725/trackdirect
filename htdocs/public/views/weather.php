@@ -77,9 +77,9 @@
                             <td>
                                 <?php if ($packetWeather->temperature !== null) : ?>
                                     <?php if (isImperialUnitUser()) : ?>
-                                        <?php echo round(convertCelciusToFahrenheit($packetWeather->temperature), 2); ?>&deg; F
+                                        <?php echo htmlspecialchars(round(convertCelciusToFahrenheit($packetWeather->temperature), 2), ENT_QUOTES, 'UTF-8'); ?>&deg; F
                                     <?php else : ?>
-                                        <?php echo round($packetWeather->temperature, 2); ?>&deg; C
+                                        <?php echo htmlspecialchars(round($packetWeather->temperature, 2), ENT_QUOTES, 'UTF-8'); ?>&deg; C
                                     <?php endif; ?>
                                 <?php else : ?>
                                     -
@@ -95,9 +95,9 @@
                             <td>
                                 <?php if ($packetWeather->pressure !== null) : ?>
                                     <?php if (isImperialUnitUser()) : ?>
-                                        <?php echo round(convertMbarToMmhg($packetWeather->pressure),1); ?> mmHg
+                                        <?php echo htmlspecialchars(round(convertMbarToMmhg($packetWeather->pressure),1), ENT_QUOTES, 'UTF-8'); ?> mmHg
                                     <?php else : ?>
-                                        <?php echo round($packetWeather->pressure,1); ?> hPa
+                                        <?php echo htmlspecialchars(round($packetWeather->pressure,1), ENT_QUOTES, 'UTF-8'); ?> hPa
                                     <?php endif; ?>
 
                                 <?php else : ?>
@@ -109,9 +109,9 @@
                                 <td title="<?php echo htmlspecialchars($packetWeather->getRainSummary(false, true, true), ENT_QUOTES, 'UTF-8'); ?>">
                                     <?php if ($packetWeather->rain_1h !== null) : ?>
                                         <?php if (isImperialUnitUser()) : ?>
-                                            <?php echo round(convertMmToInch($packetWeather->rain_1h), 2); ?> in
+                                            <?php echo htmlspecialchars(round(convertMmToInch($packetWeather->rain_1h), 2), ENT_QUOTES, 'UTF-8'); ?> in
                                         <?php else : ?>
-                                            <?php echo round($packetWeather->rain_1h, 2); ?> mm
+                                            <?php echo htmlspecialchars(round($packetWeather->rain_1h, 2), ENT_QUOTES, 'UTF-8'); ?> mm
                                         <?php endif; ?>
                                     <?php else : ?>
                                         -
@@ -121,9 +121,9 @@
                                 <td title="<?php echo htmlspecialchars($packetWeather->getRainSummary(true, false, true), ENT_QUOTES, 'UTF-8'); ?>">
                                     <?php if ($packetWeather->rain_24h !== null) : ?>
                                         <?php if (isImperialUnitUser()) : ?>
-                                            <?php echo round(convertMmToInch($packetWeather->rain_24h), 2); ?> in
+                                            <?php echo htmlspecialchars(round(convertMmToInch($packetWeather->rain_24h), 2), ENT_QUOTES, 'UTF-8'); ?> in
                                         <?php else : ?>
-                                            <?php echo round($packetWeather->rain_24h, 2); ?> mm
+                                            <?php echo htmlspecialchars(round($packetWeather->rain_24h, 2), ENT_QUOTES, 'UTF-8'); ?> mm
                                         <?php endif; ?>
                                     <?php else : ?>
                                         -
@@ -133,9 +133,9 @@
                                 <td title="<?php echo htmlspecialchars($packetWeather->getRainSummary(true, true, false), ENT_QUOTES, 'UTF-8'); ?>">
                                     <?php if ($packetWeather->rain_since_midnight !== null) : ?>
                                         <?php if (isImperialUnitUser()) : ?>
-                                            <?php echo round(convertMmToInch($packetWeather->rain_since_midnight), 2); ?> in
+                                            <?php echo htmlspecialchars(round(convertMmToInch($packetWeather->rain_since_midnight), 2), ENT_QUOTES, 'UTF-8'); ?> in
                                         <?php else : ?>
-                                            <?php echo round($packetWeather->rain_since_midnight, 2); ?> mm
+                                            <?php echo htmlspecialchars(round($packetWeather->rain_since_midnight, 2), ENT_QUOTES, 'UTF-8'); ?> mm
                                         <?php endif; ?>
                                     <?php else : ?>
                                         -
@@ -143,22 +143,22 @@
                                 </td>
                             <?php endif; ?>
 
-                            <td title="Wind gust: <?php echo ($packetWeather->wind_gust !== null?round($packetWeather->wind_gust,2):'-'); ?> m/s">
+                            <td title="Wind gust: <?php echo htmlspecialchars(($packetWeather->wind_gust !== null?round($packetWeather->wind_gust,2):'-'), ENT_QUOTES, 'UTF-8'); ?> m/s">
 
                                 <?php if (isImperialUnitUser()) : ?>
                                     <?php if ($packetWeather->wind_speed !== null && $packetWeather->wind_speed > 0) : ?>
-                                        <?php echo round(convertMpsToMph($packetWeather->wind_speed), 2); ?> mph, <?php echo htmlspecialchars($packetWeather->wind_direction, ENT_QUOTES, 'UTF-8'); ?>&deg;
+                                        <?php echo htmlspecialchars(round(convertMpsToMph($packetWeather->wind_speed), 2), ENT_QUOTES, 'UTF-8'); ?> mph, <?php echo htmlspecialchars($packetWeather->wind_direction, ENT_QUOTES, 'UTF-8'); ?>&deg;
                                     <?php elseif($packetWeather->wind_speed !== null) : ?>
-                                        <?php echo round(convertMpsToMph($packetWeather->wind_speed), 2); ?> mph
+                                        <?php echo htmlspecialchars(round(convertMpsToMph($packetWeather->wind_speed), 2), ENT_QUOTES, 'UTF-8'); ?> mph
                                     <?php else : ?>
                                         -
                                     <?php endif; ?>
 
                                 <?php else : ?>
                                     <?php if ($packetWeather->wind_speed !== null && $packetWeather->wind_speed > 0) : ?>
-                                        <?php echo round($packetWeather->wind_speed, 2); ?> m/s, <?php echo htmlspecialchars($packetWeather->wind_direction, ENT_QUOTES, 'UTF-8'); ?>&deg;
+                                        <?php echo htmlspecialchars(round($packetWeather->wind_speed, 2), ENT_QUOTES, 'UTF-8'); ?> m/s, <?php echo htmlspecialchars($packetWeather->wind_direction, ENT_QUOTES, 'UTF-8'); ?>&deg;
                                     <?php elseif($packetWeather->wind_speed !== null) : ?>
-                                        <?php echo round($packetWeather->wind_speed, 2); ?> m/s
+                                        <?php echo htmlspecialchars(round($packetWeather->wind_speed, 2), ENT_QUOTES, 'UTF-8'); ?> m/s
                                     <?php else : ?>
                                         -
                                     <?php endif; ?>
@@ -167,7 +167,7 @@
 
                             <td>
                                 <?php if ($packetWeather->luminosity !== null) : ?>
-                                    <?php echo round($packetWeather->luminosity,0); ?> W/m&sup2;
+                                    <?php echo htmlspecialchars(round($packetWeather->luminosity,0), ENT_QUOTES, 'UTF-8'); ?> W/m&sup2;
                                 <?php else : ?>
                                     -
                                 <?php endif; ?>
@@ -176,9 +176,9 @@
                             <td>
                                 <?php if ($packetWeather->snow !== null) : ?>
                                     <?php if (isImperialUnitUser()) : ?>
-                                        <?php echo round(convertMmToInch($packetWeather->snow), 0); ?> in
+                                        <?php echo htmlspecialchars(round(convertMmToInch($packetWeather->snow), 0), ENT_QUOTES, 'UTF-8'); ?> in
                                     <?php else : ?>
-                                        <?php echo round($packetWeather->snow, 0); ?> mm
+                                        <?php echo htmlspecialchars(round($packetWeather->snow, 0), ENT_QUOTES, 'UTF-8'); ?> mm
                                     <?php endif; ?>
                                 <?php else : ?>
                                     -
@@ -221,7 +221,7 @@
             });
 
             $('#weather-rows').change(function () {
-                loadView("/views/weather.php?id=<?php echo $station->id ?>&rows=" + $('#weather-rows').val() + "&page=1");
+                loadView("/views/weather.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&rows=" + $('#weather-rows').val() + "&page=1");
             });
 
 
