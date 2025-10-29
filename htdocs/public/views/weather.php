@@ -15,22 +15,22 @@
         $pages = ceil($count / $rows);
     ?>
 
-    <title><?php echo $station->name; ?> Weather</title>
+    <title><?php echo htmlspecialchars($station->name, ENT_QUOTES, 'UTF-8'); ?> Weather</title>
     <div class="modal-inner-content">
         <div class="modal-inner-content-menu">
-            <a class="tdlink" title="Overview" href="/views/overview.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Overview</a>
-            <a class="tdlink" title="Statistics" href="/views/statistics.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Statistics</a>
-            <a class="tdlink" title="Trail Chart" href="/views/trail.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Trail Chart</a>
+            <a class="tdlink" title="Overview" href="/views/overview.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Overview</a>
+            <a class="tdlink" title="Statistics" href="/views/statistics.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Statistics</a>
+            <a class="tdlink" title="Trail Chart" href="/views/trail.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Trail Chart</a>
             <span>Weather</span>
-            <a class="tdlink" title="Telemetry" href="/views/telemetry.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Telemetry</a>
-            <a class="tdlink" title="Raw packets" href="/views/raw.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Raw packets</a>
+            <a class="tdlink" title="Telemetry" href="/views/telemetry.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0;, ENT_QUOTES, 'UTF-8') ?>">Telemetry</a>
+            <a class="tdlink" title="Raw packets" href="/views/raw.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Raw packets</a>
         </div>
 
         <div class="horizontal-line">&nbsp;</div>
 
         <?php if (count($weatherPackets) > 0) : ?>
 
-            <p>This is the latest recevied weather packets stored in our database for station/object <?php echo $station->name; ?>. If no packets are shown the sender has not sent any weather packets the latest <?php echo $maxDays; ?> day(s).</p>
+            <p>This is the latest recevied weather packets stored in our database for station/object <?php echo htmlspecialchars($station->name, ENT_QUOTES, 'UTF-8'); ?>. If no packets are shown the sender has not sent any weather packets the latest <?php echo $maxDays; ?> day(s).</p>
 
             <div class="form-container">
                 <select id="weather-rows" style="float:left; margin-right: 5px;" class="pagination-rows">
@@ -44,11 +44,11 @@
 
             <?php if ($pages > 1): ?>
                 <div class="pagination">
-                  <a class="tdlink" href="/views/weather.php?id=<?php echo $station->id; ?>&rows=<?php echo $rows; ?>&page=1"><<</a>
+                  <a class="tdlink" href="/views/weather.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&rows=<?php echo $rows; ?>&page=1"><<</a>
                   <?php for($i = max(1, $page - 3); $i <= min($pages, $page + 3); $i++) : ?>
-                  <a href="/views/weather.php?id=<?php echo $station->id; ?>&rows=<?php echo $rows; ?>&page=<?php echo $i; ?>" <?php echo ($i == $page ? 'class="tdlink active"': 'class="tdlink"')?>><?php echo $i ?></a>
+                  <a href="/views/weather.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&rows=<?php echo $rows; ?>&page=<?php echo $i; ?>" <?php echo ($i == $page ? 'class="tdlink active"': 'class="tdlink"')?>><?php echo $i ?></a>
                   <?php endfor; ?>
-                  <a class="tdlink" href="/views/weather.php?id=<?php echo $station->id; ?>&rows=<?php echo $rows; ?>&page=<?php echo $pages; ?>">>></a>
+                  <a class="tdlink" href="/views/weather.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&rows=<?php echo $rows; ?>&page=<?php echo htmlspecialchars($pages, ENT_QUOTES, 'UTF-8'); ?>">>></a>
                 </div>
             <?php endif; ?>
 
@@ -72,7 +72,7 @@
 
                         <tr>
                             <td class="weathertime">
-                                <?php echo ($packetWeather->wxRawTimestamp != null?$packetWeather->wxRawTimestamp:$packetWeather->timestamp); ?>
+                                <?php echo htmlspecialchars(($packetWeather->wxRawTimestamp != null?$packetWeather->wxRawTimestamp:$packetWeather->timestamp), ENT_QUOTES, 'UTF-8'); ?>
                             </td>
                             <td>
                                 <?php if ($packetWeather->temperature !== null) : ?>
@@ -87,7 +87,7 @@
                             </td>
                             <td>
                                 <?php if ($packetWeather->humidity !== null) : ?>
-                                    <?php echo $packetWeather->humidity; ?>%
+                                    <?php echo htmlspecialchars($packetWeather->humidity, ENT_QUOTES, 'UTF-8'); ?>%
                                 <?php else : ?>
                                     -
                                 <?php endif; ?>
@@ -106,7 +106,7 @@
                             </td>
 
                             <?php if ($weatherPackets[0]->rain_1h !== null) : ?>
-                                <td title="<?php echo $packetWeather->getRainSummary(false, true, true); ?>">
+                                <td title="<?php echo htmlspecialchars($packetWeather->getRainSummary(false, true, true), ENT_QUOTES, 'UTF-8'); ?>">
                                     <?php if ($packetWeather->rain_1h !== null) : ?>
                                         <?php if (isImperialUnitUser()) : ?>
                                             <?php echo round(convertMmToInch($packetWeather->rain_1h), 2); ?> in
@@ -118,7 +118,7 @@
                                     <?php endif; ?>
                                 </td>
                             <?php elseif ($weatherPackets[0]->rain_24h !== null) : ?>
-                                <td title="<?php echo $packetWeather->getRainSummary(true, false, true); ?>">
+                                <td title="<?php echo htmlspecialchars($packetWeather->getRainSummary(true, false, true), ENT_QUOTES, 'UTF-8'); ?>">
                                     <?php if ($packetWeather->rain_24h !== null) : ?>
                                         <?php if (isImperialUnitUser()) : ?>
                                             <?php echo round(convertMmToInch($packetWeather->rain_24h), 2); ?> in
@@ -130,7 +130,7 @@
                                     <?php endif; ?>
                                 </td>
                             <?php else : ?>
-                                <td title="<?php echo $packetWeather->getRainSummary(true, true, false); ?>">
+                                <td title="<?php echo htmlspecialchars($packetWeather->getRainSummary(true, true, false), ENT_QUOTES, 'UTF-8'); ?>">
                                     <?php if ($packetWeather->rain_since_midnight !== null) : ?>
                                         <?php if (isImperialUnitUser()) : ?>
                                             <?php echo round(convertMmToInch($packetWeather->rain_since_midnight), 2); ?> in
@@ -147,7 +147,7 @@
 
                                 <?php if (isImperialUnitUser()) : ?>
                                     <?php if ($packetWeather->wind_speed !== null && $packetWeather->wind_speed > 0) : ?>
-                                        <?php echo round(convertMpsToMph($packetWeather->wind_speed), 2); ?> mph, <?php echo $packetWeather->wind_direction; ?>&deg;
+                                        <?php echo round(convertMpsToMph($packetWeather->wind_speed), 2); ?> mph, <?php echo htmlspecialchars($packetWeather->wind_direction, ENT_QUOTES, 'UTF-8'); ?>&deg;
                                     <?php elseif($packetWeather->wind_speed !== null) : ?>
                                         <?php echo round(convertMpsToMph($packetWeather->wind_speed), 2); ?> mph
                                     <?php else : ?>
@@ -156,7 +156,7 @@
 
                                 <?php else : ?>
                                     <?php if ($packetWeather->wind_speed !== null && $packetWeather->wind_speed > 0) : ?>
-                                        <?php echo round($packetWeather->wind_speed, 2); ?> m/s, <?php echo $packetWeather->wind_direction; ?>&deg;
+                                        <?php echo round($packetWeather->wind_speed, 2); ?> m/s, <?php echo htmlspecialchars($packetWeather->wind_direction, ENT_QUOTES, 'UTF-8'); ?>&deg;
                                     <?php elseif($packetWeather->wind_speed !== null) : ?>
                                         <?php echo round($packetWeather->wind_speed, 2); ?> m/s
                                     <?php else : ?>
@@ -228,8 +228,8 @@
             if (window.trackdirect) {
                 <?php if ($station->latestConfirmedLatitude != null && $station->latestConfirmedLongitude != null) : ?>
                     window.trackdirect.addListener("map-created", function() {
-                        if (!window.trackdirect.focusOnStation(<?php echo $station->id ?>, true)) {
-                            window.trackdirect.setCenter(<?php echo $station->latestConfirmedLatitude ?>, <?php echo $station->latestConfirmedLongitude ?>);
+                        if (!window.trackdirect.focusOnStation(<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>, true)) {
+                            window.trackdirect.setCenter(<?php echo htmlspecialchars($station->latestConfirmedLatitude, ENT_QUOTES, 'UTF-8'); ?>, <?php echo htmlspecialchars($station->latestConfirmedLongitude, ENT_QUOTES, 'UTF-8'); ?>);
                         }
                     });
                 <?php endif; ?>

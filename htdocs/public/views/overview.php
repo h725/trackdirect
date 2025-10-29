@@ -2,15 +2,15 @@
 
 <?php $station = StationRepository::getInstance()->getObjectById($_GET['id'] ?? null); ?>
 <?php if ($station->isExistingObject()) : ?>
-    <title><?php echo $station->name; ?> Overview</title>
+    <title><?php echo htmlspecialchars($station->name, ENT_QUOTES, 'UTF-8'); ?> Overview</title>
     <div class="modal-inner-content">
         <div class="modal-inner-content-menu">
             <span>Overview</span>
-            <a class="tdlink" title="Statistics" href="/views/statistics.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Statistics</a>
-            <a class="tdlink" title="Trail Chart" href="/views/trail.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Trail Chart</a>
-            <a class="tdlink" title="Weather" href="/views/weather.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Weather</a>
-            <a class="tdlink" title="Telemetry" href="/views/telemetry.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Telemetry</a>
-            <a class="tdlink" title="Raw packets" href="/views/raw.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Raw packets</a>
+            <a class="tdlink" title="Statistics" href="/views/statistics.php?id=<?php htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Statistics</a>
+            <a class="tdlink" title="Trail Chart" href="/views/trail.php?id=<?php htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Trail Chart</a>
+            <a class="tdlink" title="Weather" href="/views/weather.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Weather</a>
+            <a class="tdlink" title="Telemetry" href="/views/telemetry.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Telemetry</a>
+            <a class="tdlink" title="Raw packets" href="/views/raw.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Raw packets</a>
         </div>
 
         <div class="horizontal-line">&nbsp;</div>
@@ -34,7 +34,7 @@
                     Station ID:
                 </div>
                 <div class="overview-content-station" title="Website station id">
-                    <?php echo $station->id; ?>
+                    <?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>
                 </div>
             </div>
 
@@ -42,7 +42,7 @@
                 <div>
                     <div class="overview-content-summary-hr">Source:</div>
                     <div class="overview-content-station" title="Source of this station">
-                        <?php echo $station->getSourceDescription(); ?>
+                        <?php echo htmlspecialchars($station->getSourceDescription(), ENT_QUOTES, 'UTF-8'); ?>
                     </div>
                 </div>
             <?php endif; ?>
@@ -94,7 +94,7 @@
                 <div>
                     <div class="overview-content-summary-hr">Symbol:</div>
                     <div class="overview-content-station" title="Symbol type">
-                        <img src="<?php echo $station->getIconFilePath(24, 24); ?>" alt="Latest symbol" />
+                        <img src="<?php echo htmlspecialchars($station->getIconFilePath(24, 24), ENT_QUOTES, 'UTF-8'); ?>" alt="Latest symbol" />
                         <span>&nbsp;<?php echo htmlentities($station->getLatestSymbolDescription()); ?></span>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
 
                 <div>
                     <div class="overview-content-summary-hr">Latest Packet:</div>
-                    <div class="overview-content-summary-cell-type overview-content-summary-indent"><?php echo $latestPacket->getPacketTypeName(); ?> Packet</div>
+                    <div class="overview-content-summary-cell-type overview-content-summary-indent"><?php echo htmlspecialchars($latestPacket->getPacketTypeName(), ENT_QUOTES, 'UTF-8'); ?> Packet</div>
                 </div>
 
                 <?php $latestPacketSender = SenderRepository::getInstance()->getObjectById($latestPacket->senderId); ?>
@@ -117,11 +117,11 @@
                     <div class="overview-content-summary-indent" title="Sender of current packet">
                         <?php $latestPacketSenderStation = StationRepository::getInstance()->getObjectByNameAndSenderId($latestPacketSender->name, $latestPacketSender->id); ?>
                         <?php if ($latestPacketSenderStation->isExistingObject()) : ?>
-                            <a class="tdlink" title="Sender of the object" href="/views/overview.php?id=<?php echo $latestPacketSenderStation->id; ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">
+                            <a class="tdlink" title="Sender of the object" href="/views/overview.php?id=<?php echo htmlspecialchars($latestPacketSenderStation->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">
                                 <?php echo htmlentities($latestPacketSenderStation->name); ?>
                             </a>
                         <?php else : ?>
-                            <?php echo $latestPacketSender->name; ?>
+                            <?php echo htmlspecialchars($latestPacketSender->name, ENT_QUOTES, 'UTF-8'); ?>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -130,7 +130,7 @@
                 <div>
                     <div class="overview-content-summary-hr-indent">Receive Time:</div>
                     <div title="Timestamp of the latest packet" id="latest-timestamp" class="overview-content-summary-cell-time overview-content-summary-indent">
-                        <?php echo $station->latestPacketTimestamp; ?>
+                        <?php echo htmlspecialchars((string) $station->latestPacketTimestamp, ENT_QUOTES, 'UTF-8'); ?>
                     </div>
                 </div>
 
@@ -138,14 +138,14 @@
                 <div>
                     <div class="overview-content-summary-hr-indent">Age:</div>
                     <div title="Age of the latest packet" id="latest-timestamp-age" class="overview-content-summary-cell-time overview-content-summary-indent">
-                        <?php echo $station->latestPacketTimestamp; ?>
+                        <?php echo htmlspecialchars((string) $station->latestPacketTimestamp, ENT_QUOTES, 'UTF-8'); ?>
                     </div>
                 </div>
 
 
                 <div>
                     <div class="overview-content-summary-hr-indent">Path:</div>
-                    <div class="overview-content-summary-cell-path overview-content-summary-indent" title="Latest path"><?php echo $latestPacket->rawPath; ?></div>
+                    <div class="overview-content-summary-cell-path overview-content-summary-indent" title="Latest path"><?php echo htmlspecialchars($latestPacket->rawPath, ENT_QUOTES, 'UTF-8'); ?></div>
                 </div>
 
                 <?php if ($latestPacket->comment != '') : ?>
@@ -162,21 +162,21 @@
                     <?php if ($latestPacket->getPacketOgn()->ognSignalToNoiseRatio !== null) : ?>
                         <div>
                             <div class="overview-content-summary-hr-indent">Signal to Noise Ratio:</div>
-                            <div class="overview-content-summary-indent" title="Signal to Noise Ratio measured upon reception"><?php echo $latestPacket->getPacketOgn()->ognSignalToNoiseRatio; ?> dB</div>
+                            <div class="overview-content-summary-indent" title="Signal to Noise Ratio measured upon reception"><?php echo htmlspecialchars($latestPacket->getPacketOgn()->ognSignalToNoiseRatio, ENT_QUOTES, 'UTF-8'); ?> dB</div>
                         </div>
                     <?php endif;?>
 
                     <?php if ($latestPacket->getPacketOgn()->ognBitErrorsCorrected !== null) : ?>
                         <div>
                             <div class="overview-content-summary-hr-indent">Bits corrected:</div>
-                            <div class="overview-content-summary-indent" title="The number of bit errors corrected in the packet upon reception"><?php echo $latestPacket->getPacketOgn()->ognBitErrorsCorrected; ?></div>
+                            <div class="overview-content-summary-indent" title="The number of bit errors corrected in the packet upon reception"><?php echo htmlspecialchars($latestPacket->getPacketOgn()->ognBitErrorsCorrected, ENT_QUOTES, 'UTF-8'); ?></div>
                         </div>
                     <?php endif;?>
 
                     <?php if ($latestPacket->getPacketOgn()->ognFrequencyOffset !== null) : ?>
                         <div>
                             <div class="overview-content-summary-hr-indent">Frequency Offset:</div>
-                            <div class="overview-content-summary-indent" title="The frequency offset measured upon reception"><?php echo $latestPacket->getPacketOgn()->ognFrequencyOffset; ?> kHz</div>
+                            <div class="overview-content-summary-indent" title="The frequency offset measured upon reception"><?php echo htmlspecialchars($latestPacket->getPacketOgn()->ognFrequencyOffset, ENT_QUOTES, 'UTF-8'); ?> kHz</div>
                         </div>
                     <?php endif;?>
                 <?php endif;?>
@@ -191,7 +191,7 @@
                 <div>
                     <div class="overview-content-summary-hr">Latest Weather:</div>
                     <div id="weather-timestamp" class="overview-content-summary-cell-weather-time" title="Latest received weather">
-                        <?php echo $station->latestWeatherPacketTimestamp; ?>
+                        <?php echo htmlspecialchars((string) intval($station->latestWeatherPacketTimestamp), ENT_QUOTES, 'UTF-8'); ?>
                     </div>
                 </div>
 
@@ -212,7 +212,7 @@
                 <div>
                     <div class="overview-content-summary-hr">Latest Telemetry:</div>
                     <div id="telemetry-timestamp" class="overview-content-summary-cell-telemetry-time" title="Latest received telemetry">
-                        <?php echo $station->latestTelemetryPacketTimestamp; ?>
+                        <?php echo htmlspecialchars((string) $station->latestTelemetryPacketTimestamp, ENT_QUOTES, 'UTF-8'); ?>
                     </div>
                 </div>
             <?php endif;?>
@@ -225,7 +225,7 @@
                 <div>
                     <div class="overview-content-summary-hr">Latest Position:</div>
                     <div id="overview-content-latest-position" class="overview-content-summary-cell-position" title="Latest position (that is approved by our filters)">
-                        <?php echo round($station->latestConfirmedLatitude, 5); ?>, <?php echo round($station->latestConfirmedLongitude, 5); ?>
+                        <?php echo htmlspecialchars((string)round((float)$station->latestConfirmedLatitude, 5), ENT_QUOTES, 'UTF-8'); ?>, <?php echo htmlspecialchars((string)round((float)$station->latestConfirmedLongitude, 5), ENT_QUOTES, 'UTF-8'); ?>
                     </div>
                 </div>
 
@@ -235,18 +235,18 @@
                         <?php if ($station->latestPacketId == $station->latestConfirmedPacketId && $station->latestPacketTimestamp == $station->latestConfirmedPacketTimestamp) : ?>
                             (Received in latest packet)
                         <?php else : ?>
-                            <?php echo $station->latestConfirmedPacketTimestamp; ?>
+                            <?php echo htmlspecialchars((string) $station->latestConfirmedPacketTimestamp, ENT_QUOTES, 'UTF-8'); ?>
                         <?php endif; ?>
                     </div>
                 </div>
                 <div>
                     <div class="overview-content-summary-hr">&nbsp;</div>
                     <div class="overview-content-summary-cell-position">
-                        <a href="?sid=<?php echo $station->id; ?>" onclick="
+                        <a href="?sid=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>" onclick="
                             if (window.parent && window.parent.trackdirect) {
                                 $('.modal', parent.document).hide();
                                 window.parent.trackdirect.filterOnStationId([]);
-                                window.parent.trackdirect.filterOnStationId([<?php echo $station->id; ?>]);
+                                window.parent.trackdirect.filterOnStationId([<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>]);
                                 return false;
                             }">Show on map</a>
                     </div>
@@ -270,9 +270,9 @@
                                 <div class="overview-content-summary-hr-indent">Speed:</div>
                                 <div title="Latest speed" class="overview-content-summary-indent">
                                     <?php if (isImperialUnitUser()) : ?>
-                                        <?php echo round(convertKilometerToMile($latestConfirmedPacket->speed), 2); ?> mph
+                                        <?php echo htmlspecialchars(round(convertKilometerToMile(floatval($latestConfirmedPacket->speed)), 2), ENT_QUOTES, 'UTF-8'); ?> mph
                                     <?php else : ?>
-                                        <?php echo round($latestConfirmedPacket->speed, 2); ?> km/h
+                                        <?php echo htmlspecialchars(round($latestConfirmedPacket->speed, 2), ENT_QUOTES, 'UTF-8'); ?> km/h
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -281,7 +281,7 @@
                             <?php if ($latestConfirmedPacket->course != '') : ?>
                             <div>
                                 <div class="overview-content-summary-hr-indent">Course:</div>
-                                <div title="Latest course" class="overview-content-summary-indent"><?php echo $latestConfirmedPacket->course; ?>&deg;</div>
+                                <div title="Latest course" class="overview-content-summary-indent"><?php echo htmlspecialchars($latestConfirmedPacket->course, ENT_QUOTES, 'UTF-8'); ?>&deg;</div>
                             </div>
                             <?php endif;?>
 
@@ -290,9 +290,9 @@
                                 <div class="overview-content-summary-hr-indent">Altitude:</div>
                                 <div title="Latest altitude" class="overview-content-summary-indent">
                                     <?php if (isImperialUnitUser()) : ?>
-                                        <?php echo round(convertMeterToFeet($latestConfirmedPacket->altitude), 2); ?> ft
+                                        <?php echo htmlspecialchars(round(convertMeterToFeet($latestConfirmedPacket->altitude), 2), ENT_QUOTES, 'UTF-8'); ?> ft
                                     <?php else : ?>
-                                        <?php echo round($latestConfirmedPacket->altitude, 2); ?> m
+                                        <?php echo htmlspecialchars(round($latestConfirmedPacket->altitude, 2), ENT_QUOTES, 'UTF-8'); ?> m
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -305,7 +305,7 @@
                         <?php if ($latestConfirmedPacket->getPacketOgn()->ognClimbRate !== null) : ?>
                             <div>
                                 <div class="overview-content-summary-hr-indent">Climb Rate:</div>
-                                <div class="overview-content-summary-indent" title="The climb rate in feet-per-minute"><?php echo $latestConfirmedPacket->getPacketOgn()->ognClimbRate; ?> fpm</div>
+                                <div class="overview-content-summary-indent" title="The climb rate in feet-per-minute"><?php echo htmlspecialchars($latestConfirmedPacket->getPacketOgn()->ognClimbRate, ENT_QUOTES, 'UTF-8'); ?> fpm</div>
                             </div>
                         <?php endif;?>
 
@@ -313,7 +313,7 @@
                             <div>
                                 <?php $turnRateNote = true; ?>
                                 <div class="overview-content-summary-hr-indent">Turn Rate:</div>
-                                <div class="overview-content-summary-indent" title="Current turn rate."><?php echo $latestConfirmedPacket->getPacketOgn()->ognTurnRate; ?> rot</div>
+                                <div class="overview-content-summary-indent" title="Current turn rate."><?php echo htmlspecialchars($latestConfirmedPacket->getPacketOgn()->ognTurnRate, ENT_QUOTES, 'UTF-8'); ?> rot</div>
                             </div>
                         <?php endif;?>
                     <?php endif;?>
@@ -326,12 +326,12 @@
                         <div>
                             <div class="overview-content-summary-hr">Latest PHG:</div>
                             <div class="overview-content-summary-cell-phg" title="Power-Height-Gain (and directivity)">
-                                <?php echo $latestConfirmedPacket->getPHGDescription(true); ?><br/>
+                                <?php echo htmlspecialchars($latestConfirmedPacket->getPHGDescription(true), ENT_QUOTES, 'UTF-8'); ?><br/>
                                 (Calculated range:
                                     <?php if (isImperialUnitUser()) : ?>
-                                        <?php echo round(convertKilometerToMile($latestConfirmedPacket->getPHGRange(true)/1000),2); ?> miles)
+                                        <?php echo htmlspecialchars(round(convertKilometerToMile($latestConfirmedPacket->getPHGRange(true)/1000),2), ENT_QUOTES, 'UTF-8'); ?> miles)
                                     <?php else : ?>
-                                        <?php echo round($latestConfirmedPacket->getPHGRange(true)/1000,2); ?> km)
+                                        <?php echo htmlspecialchars(round($latestConfirmedPacket->getPHGRange(true)/1000,2), ENT_QUOTES, 'UTF-8'); ?> km)
                                     <?php endif; ?>
                             </div>
                         </div>
@@ -343,9 +343,9 @@
                             <div class="overview-content-summary-hr">Latest RNG:</div>
                             <div class="overview-content-summary-cell-phg" title="The pre-calculated radio range">
                                 <?php if (isImperialUnitUser()) : ?>
-                                    <?php echo round(convertKilometerToMile($latestConfirmedPacket->getRng(true)), 2); ?> miles
+                                    <?php echo htmlspecialchars(round(convertKilometerToMile($latestConfirmedPacket->getRng(true)), 2), ENT_QUOTES, 'UTF-8'); ?> miles
                                 <?php else : ?>
-                                    <?php echo round($latestConfirmedPacket->getRng(true), 2); ?> km
+                                    <?php echo htmlspecialchars((string)round(floatval($latestConfirmedPacket->getRng(true)), 2), ENT_QUOTES, 'UTF-8'); ?> km
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -361,7 +361,7 @@
                     <div class="overview-content-summary-hr">Latest used symbols:</div>
                     <div title="Latest symbols that this station has used">
                         <?php foreach ($stationLatestSymbols as $symbolPath) : ?>
-                            <img src="<?php echo $symbolPath; ?>" alt="Symbol"/>&nbsp;
+                            <img src="<?php echo htmlspecialchars($symbolPath, ENT_QUOTES, 'UTF-8'); ?>" alt="Symbol"/>&nbsp;
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -375,7 +375,7 @@
                 <div class="overview-content-divider"></div>
                 <div>
                     <div class="overview-content-summary-hr">Packet frequency:</div>
-                    <div class="overview-content-packet-frequency" title="Calculated packet frequency"><span><?php echo $stationPacketFrequency; ?>s</span> <span>(Latest <?php echo $packetFrequencyNumberOfPackets; ?> packets)</span></div>
+                    <div class="overview-content-packet-frequency" title="Calculated packet frequency"><span><?php echo htmlspecialchars($stationPacketFrequency, ENT_QUOTES, 'UTF-8'); ?>s</span> <span>(Latest <?php echo htmlspecialchars($packetFrequencyNumberOfPackets, ENT_QUOTES, 'UTF-8'); ?> packets)</span></div>
                 </div>
             <?php endif; ?>
 
@@ -383,24 +383,24 @@
             <div class="overview-content-divider"></div>
         </div>
 
-        <div class="overview-content-symbol" id ="overview-content-symbol-<?php echo $station->id; ?>">
-            <img src="<?php echo $station->getIconFilePath(150, 150); ?>" alt="Latest symbol" title="<?php echo $station->getLatestSymbolDescription(); ?>"/>
+        <div class="overview-content-symbol" id ="overview-content-symbol-<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>">
+            <img src="<?php echo htmlspecialchars($station->getIconFilePath(150, 150), ENT_QUOTES, 'UTF-8'); ?>" alt="Latest symbol" title="<?php echo htmlspecialchars($station->getLatestSymbolDescription(), ENT_QUOTES, 'UTF-8'); ?>"/>
             <?php if ($station->latestPacketId !== null) : ?>
                 <br/>
                 <div style="text-align: center; padding-top: 30px;">
                     <?php if ($station->getOgnDevice() !== null && $station->getOgnDevice()->registration != null) : ?>
                         <div>
-                            Search for <a href="https://www.jetphotos.com/registration/<?php echo $station->getOgnDevice()->registration; ?>" target="_blank"><?php echo htmlspecialchars($station->getOgnDevice()->registration); ?></a> photos!
+                            Search for <a href="https://www.jetphotos.com/registration/<?php echo htmlspecialchars(rawurlencode($station->getOgnDevice()->registration), ENT_QUOTES, 'UTF-8'); ?>" target="_blank"><?php echo htmlspecialchars($station->getOgnDevice()->registration, ENT_QUOTES, 'UTF-8'); ?></a> photos!
                         </div>
                     <?php endif; ?>
 
                     <?php if ($station->sourceId == 1) : ?>
                         <?php if ($station->getLiklyHamRadioCallsign() !== null) : ?>
-                            <div>Search for <a href="https://www.qrz.com/db/<?php echo $station->getLiklyHamRadioCallsign(); ?>" target="_blank"><?php echo htmlspecialchars($station->getLiklyHamRadioCallsign()); ?></a> at QRZ</div>
+                            <div>Search for <a href="https://www.qrz.com/db/<?php echo htmlspecialchars($station->getLiklyHamRadioCallsign(), ENT_QUOTES, 'UTF-8'); ?>" target="_blank"><?php echo htmlspecialchars($station->getLiklyHamRadioCallsign(), ENT_QUOTES, 'UTF-8'); ?></a> at QRZ</div>
                         <?php endif; ?>
                     <?php endif; ?>
 
-                    <div>Export <a href="/data/kml.php?id=<?php echo $station->id; ?>"><?php echo htmlspecialchars($station->name); ?></a> data to KML</div>
+                    <div>Export <a href="/data/kml.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($station->name); ?></a> data to KML</div>
                 </div>
                 <div style="clear: both;"></div>
             <?php endif; ?>
@@ -419,8 +419,8 @@
                     <div class="overview-content-station-list" title="Stations with same call except SSID or objects with related sender">
                         <?php foreach ($relatedStations as $relatedStation) : ?>
                             <?php if ($relatedStation->id != $station->id) : ?>
-                                <img src="<?php echo $relatedStation->getIconFilePath(22, 22); ?>" alt="Symbol"/>&nbsp;
-                                <span><a class="tdlink" href="/views/overview.php?id=<?php echo $relatedStation->id; ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>"><?php echo htmlentities($relatedStation->name) ?></a></span>
+                                <img src="<?php echo htmlspecialchars($relatedStation->getIconFilePath(22, 22), ENT_QUOTES, 'UTF-8'); ?>" alt="Symbol"/>&nbsp;
+                                <span><a class="tdlink" href="/views/overview.php?id=<?php echo htmlspecialchars($relatedStation->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlentities($relatedStation->name) ?></a></span>
                                 <br/>
                             <?php endif; ?>
                         <?php endforeach; ?>
@@ -439,9 +439,9 @@
                         <?php foreach ($closeByStations as $closeByStation) : ?>
                             <?php if ($closeByStation->id != $station->id) : ?>
 
-                                <img src="<?php echo $closeByStation->getIconFilePath(22, 22); ?>" alt="Symbol"/>&nbsp;
+                                <img src="<?php echo htmlspecialchars($closeByStation->getIconFilePath(22, 22), ENT_QUOTES, 'UTF-8'); ?>" alt="Symbol"/>&nbsp;
                                 <span>
-                                    <a class="tdlink" href="/views/overview.php?id=<?php echo $closeByStation->id; ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>"><?php echo htmlentities($closeByStation->name) ?></a>
+                                    <a class="tdlink" href="/views/overview.php?id=<?php echo htmlspecialchars($closeByStation->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlentities($closeByStation->name) ?></a>
                                     <span>
                                         <?php if (isImperialUnitUser()) : ?>
                                             <?php if (convertMeterToYard($closeByStation->getDistance($station->latestConfirmedLatitude, $station->latestConfirmedLongitude)) < 1000) : ?>
@@ -538,8 +538,8 @@
             if (window.trackdirect) {
                 <?php if ($station->latestConfirmedLatitude != null && $station->latestConfirmedLongitude != null) : ?>
                     window.trackdirect.addListener("map-created", function() {
-                        if (!window.trackdirect.focusOnStation(<?php echo $station->id ?>, true)) {
-                            window.trackdirect.setCenter(<?php echo $station->latestConfirmedLatitude ?>, <?php echo $station->latestConfirmedLongitude ?>);
+                        if (!window.trackdirect.focusOnStation(<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>, true)) {
+                            window.trackdirect.setCenter(<?php echo htmlspecialchars($station->latestConfirmedLatitude, ENT_QUOTES, 'UTF-8'); ?>, <?php echo htmlspecialchars($station->latestConfirmedLongitude, ENT_QUOTES, 'UTF-8'); ?>);
                         }
                     });
                 <?php endif; ?>

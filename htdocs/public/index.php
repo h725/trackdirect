@@ -72,18 +72,18 @@
                     options['isMobile'] = true;
                 }
 
-                options['time'] =       "<?php echo $_GET['time'] ?? '' ?>";        // How many minutes of history to show
-                options['center'] =     "<?php echo $_GET['center'] ?? '' ?>";      // Position to center on (for example "46.52108,14.63379")
-                options['zoom'] =       "<?php echo $_GET['zoom'] ?? '' ?>";        // Zoom level
-                options['timetravel'] = "<?php echo $_GET['timetravel'] ?? '' ?>";  // Unix timestamp to travel to
-                options['maptype'] =    "<?php echo $_GET['maptype'] ?? '' ?>";     // May be "roadmap", "terrain" or "satellite"
-                options['mid'] =        "<?php echo $_GET['mid'] ?? '' ?>";         // Render map from "Google My Maps" (requires https)
+                options['time'] =       "<?php htmlspecialchars(echo $_GET['time'] ?? '', ENT_QUOTES, 'UTF-8');  ?>";        // How many minutes of history to show
+                options['center'] =     "<?php htmlspecialchars(echo $_GET['center'] ?? '', ENT_QUOTES, 'UTF-8'); ?>";      // Position to center on (for example "46.52108,14.63379")
+                options['zoom'] =       "<?php htmlspecialchars(echo $_GET['zoom'] ?? '', ENT_QUOTES, 'UTF-8'); ?>";        // Zoom level
+                options['timetravel'] = "<?php htmlspecialchars(echo $_GET['timetravel'] ?? '', ENT_QUOTES, 'UTF-8'); ?>";  // Unix timestamp to travel to
+                options['maptype'] =    "<?php htmlspecialchars(echo $_GET['maptype'] ?? '', ENT_QUOTES, 'UTF-8'); ?>";     // May be "roadmap", "terrain" or "satellite"
+                options['mid'] =        "<?php htmlspecialchars(echo $_GET['mid'] ?? '', ENT_QUOTES, 'UTF-8'); ?>";         // Render map from "Google My Maps" (requires https)
 
                 options['filters'] = {};
-                options['filters']['sid'] = "<?php echo $_GET['sid'] ?? '' ?>";         // Station id to filter on
-                options['filters']['sname'] = "<?php echo $_GET['sname'] ?? '' ?>";     // Station name to filter on
-                options['filters']['sidlist'] = "<?php echo $_GET['sidlist'] ?? '' ?>";     // Station id list to filter on (colon separated)
-                options['filters']['snamelist'] = "<?php echo $_GET['snamelist'] ?? '' ?>"; // Station name list to filter on (colon separated)
+                options['filters']['sid'] = "<?php htmlspecialchars(echo $_GET['sid'] ?? '', ENT_QUOTES, 'UTF-8'); ?>";         // Station id to filter on
+                options['filters']['sname'] = "<?php htmlspecialchars(echo $_GET['sname'] ?? '', ENT_QUOTES, 'UTF-8'); ?>";     // Station name to filter on
+                options['filters']['sidlist'] = "<?php htmlspecialchars(echo $_GET['sidlist'] ?? '', ENT_QUOTES, 'UTF-8'); ?>";     // Station id list to filter on (colon separated)
+                options['filters']['snamelist'] = "<?php htmlspecialchars(echo $_GET['snamelist'] ?? '', ENT_QUOTES, 'UTF-8'); ?>"; // Station name list to filter on (colon separated)
 
                 // Tell jslib which html element to use to show connection status and mouse coordinates
                 options['statusContainerElementId'] = 'status-container';
@@ -162,7 +162,7 @@
                     $('#station-search').keypress(function (e) {
                         if (e.which == 13) {
                             var q = $('#station-search').val();
-                            loadView('/views/search.php?imperialUnits=<?php echo $_GET['imperialUnits'] ?? '0'; ?>&q=' + q + '&seconds=0');
+                            loadView('/views/search.php?imperialUnits=<?php htmlspecialchars(echo $_GET['imperialUnits'] ?? '0', ENT_QUOTES, 'UTF-8'); ?>&q=' + q + '&seconds=0');
                         }
                     });
                 });

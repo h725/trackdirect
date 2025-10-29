@@ -11,15 +11,15 @@
     <?php $senderStats = PacketPathRepository::getInstance()->getSenderPacketPathSatistics($station->id, time() - (60*60*24*$days)); ?>
     <?php $receiverStats = PacketPathRepository::getInstance()->getReceiverPacketPathSatistics($station->id, time() - (60*60*24*$days)); ?>
 
-    <title><?php echo $station->name; ?> Stats</title>
+    <title><?php echo htmlspecialchars($station->name, ENT_QUOTES, 'UTF-8'); ?> Stats</title>
     <div class="modal-inner-content">
         <div class="modal-inner-content-menu">
-            <a class="tdlink" title="Overview" href="/views/overview.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Overview</a>
+            <a class="tdlink" title="Overview" href="/views/overview.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Overview</a>
             <span>Statistics</span>
-            <a class="tdlink" title="Trail Chart" href="/views/trail.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Trail Chart</a>
-            <a class="tdlink" title="Weather" href="/views/weather.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Weather</a>
-            <a class="tdlink" title="Telemetry" href="/views/telemetry.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Telemetry</a>
-            <a class="tdlink" title="Raw packets" href="/views/raw.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Raw packets</a>
+            <a class="tdlink" title="Trail Chart" href="/views/trail.php?id=<?php htmlspecialchars(echo $station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Trail Chart</a>
+            <a class="tdlink" title="Weather" href="/views/weather.php?id=<?php htmlspecialchars(echo $station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Weather</a>
+            <a class="tdlink" title="Telemetry" href="/views/telemetry.php?id=<?php htmlspecialchars(echo $station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Telemetry</a>
+            <a class="tdlink" title="Raw packets" href="/views/raw.php?id=<?php htmlspecialchars(echo $station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Raw packets</a>
         </div>
 
         <div class="horizontal-line">&nbsp;</div>
@@ -46,13 +46,13 @@
                         <tr>
                             <td>
                                 <img alt="Symbol" src="<?php echo $otherStation->getIconFilePath(22, 22); ?>" style="vertical-align: middle;"/>&nbsp;
-                                <a class="tdlink" href="/views/overview.php?id=<?php echo $otherStation->id; ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>"><?php echo htmlentities($otherStation->name) ?></a>
+                                <a class="tdlink" href="/views/overview.php?id=<?php echo htmlspecialchars($otherStation->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlentities($otherStation->name) ?></a>
                             </td>
                             <td>
-                                <?php echo $stats["number_of_packets"]; ?>
+                                <?php echo htmlspecialchars($stats["number_of_packets"], ENT_QUOTES, 'UTF-8'); ?>
                             </td>
                             <td class="latest-heard">
-                                <?php echo $stats["latest_timestamp"];?>
+                                <?php echo htmlspecialchars($stats["latest_timestamp"], ENT_QUOTES, 'UTF-8');?>
                             </td>
 
                             <td class="longest-distance">
@@ -93,14 +93,14 @@
                         <tr>
                             <td>
                                 <img alt="Symbol" src="<?php echo $otherStation->getIconFilePath(22, 22); ?>" style="vertical-align: middle;"/>&nbsp;
-                                <a class="tdlink" href="/views/overview.php?id=<?php echo $otherStation->id; ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>"><?php echo htmlentities($otherStation->name) ?></a>
+                                <a class="tdlink" href="/views/overview.php?id=<?php echo htmlspecialchars($otherStation->id, ENT_QUOTES, 'UTF-8');; ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlentities($otherStation->name) ?></a>
 
                             </td>
                             <td>
-                                <?php echo $stats["number_of_packets"]; ?>
+                                <?php echo htmlspecialchars($stats["number_of_packets"], ENT_QUOTES, 'UTF-8');; ?>
                             </td>
                             <td class="latest-heard">
-                                <?php echo $stats["latest_timestamp"];?>
+                                <?php echo htmlspecialchars($stats["latest_timestamp"], ENT_QUOTES, 'UTF-8');;?>
                             </td>
                             <td class="longest-distance">
                                 <?php if ($stats["longest_distance"] !== null) : ?>
@@ -140,8 +140,8 @@
             if (window.trackdirect) {
                 <?php if ($station->latestConfirmedLatitude != null && $station->latestConfirmedLongitude != null) : ?>
                     window.trackdirect.addListener("map-created", function() {
-                        if (!window.trackdirect.focusOnStation(<?php echo $station->id ?>, true)) {
-                            window.trackdirect.setCenter(<?php echo $station->latestConfirmedLatitude ?>, <?php echo $station->latestConfirmedLongitude ?>);
+                        if (!window.trackdirect.focusOnStation(<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>, true)) {
+                            window.trackdirect.setCenter(<?php echo htmlspecialchars($station->latestConfirmedLatitude, ENT_QUOTES, 'UTF-8'); ?>, <?php echo htmlspecialchars($station->latestConfirmedLongitude, ENT_QUOTES, 'UTF-8'); ?>);
                         }
                     });
                 <?php endif; ?>

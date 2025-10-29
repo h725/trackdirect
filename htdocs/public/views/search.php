@@ -30,7 +30,7 @@
             </select>
         </div>
         <div>
-            <input type="text" style="width: 280px; margin-bottom: 5px;" id="station-search-form-q" name="q" placeholder="Search here!" title="Search for a station/vehicle here!" value="<?php echo ($_GET['q'] ?? '') ?>">
+            <input type="text" style="width: 280px; margin-bottom: 5px;" id="station-search-form-q" name="q" placeholder="Search here!" title="Search for a station/vehicle here!" value="<?php echo htmlspecialchars($_GET['q'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
             <input type="submit" value="Search">
         </div>
     </form>
@@ -44,11 +44,11 @@
 
         <?php if ($pages > 1): ?>
             <div class="pagination">
-              <a class="tdlink" href="/search.php?q=<?php echo ($_GET['q'] ?? "") ?>&seconds=<?php echo $seconds ?>&page=1"><<</a>
+              <a class="tdlink" href="/search.php?q=<?php echo htmlspecialchars($_GET['q'] ?? "", ENT_QUOTES, 'UTF-8'); ?>&seconds=<?php echo $seconds ?>&page=1"><<</a>
               <?php for($i = max(1, $page - 3); $i <= min($pages, $page + 3); $i++) : ?>
-              <a href="/search.php?q=<?php echo ($_GET['q'] ?? "") ?>&seconds=<?php echo $seconds ?>&page=<?php echo $i; ?>" <?php echo ($i == $page ? 'class="tdlink active"': 'class="tdlink"')?>><?php echo $i ?></a>
+              <a href="/search.php?q=<?php echo htmlspecialchars($_GET['q'] ?? "", ENT_QUOTES, 'UTF-8'); ?>&seconds=<?php echo $seconds ?>&page=<?php echo $i; ?>" <?php echo ($i == $page ? 'class="tdlink active"': 'class="tdlink"')?>><?php echo $i ?></a>
               <?php endfor; ?>
-              <a class="tdlink" href="/search.php?q=<?php echo ($_GET['q'] ?? "") ?>&seconds=<?php echo $seconds ?>&page=<?php echo $pages; ?>">>></a>
+              <a class="tdlink" href="/search.php?q=<?php echo htmlspecialchars($_GET['q'] ?? "", ENT_QUOTES, 'UTF-8'); ?>&seconds=<?php echo $seconds ?>&page=<?php echo $pages; ?>">>></a>
             </div>
         <?php endif; ?>
 
@@ -71,10 +71,10 @@
                             <img src="<?php echo $foundStation->getIconFilePath(22, 22); ?>" alt="Symbol"/>
                         </td>
                         <td>
-                            <a class="tdlink" href="/views/overview.php?id=<?php echo $foundStation->id; ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>"><?php echo htmlentities($foundStation->name) ?></a>
+                            <a class="tdlink" href="/views/overview.php?id=<?php echo htmlspecialchars($foundStation->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlentities($foundStation->name) ?></a>
                         </td>
                         <td class="station-latest-heard-timestamp" style="white-space: nowrap;">
-                            <?php echo $foundStation->latestConfirmedPacketTimestamp; ?>
+                            <?php echo htmlspecialchars($foundStation->latestConfirmedPacketTimestamp, ENT_QUOTES, 'UTF-8'); ?>
                         </td>
                         <td>
                             <?php if ($foundStation->sourceId == 5 && $foundStation->getOgnDevice() !== null) : ?>
@@ -87,11 +87,11 @@
                         </td>
                         <td>
                             <?php if ($foundStation->latestConfirmedPacketTimestamp > (time() - 60*60*24)) : ?>
-                                <a href="?sid=<?php echo $foundStation->id; ?>" onclick="
+                                <a href="?sid=<?php echo htmlspecialchars($foundStation->id, ENT_QUOTES, 'UTF-8'); ?>" onclick="
                                     if (window.parent && window.parent.trackdirect) {
                                         $('.modal', parent.document).hide();
                                         window.parent.trackdirect.filterOnStationId([]);
-                                        window.parent.trackdirect.filterOnStationId([<?php echo $foundStation->id; ?>]);
+                                        window.parent.trackdirect.filterOnStationId([<?php echo htmlspecialchars($foundStation->id, ENT_QUOTES, 'UTF-8'); ?>]);
                                         return false;
                                     }">Map</a>
                             <?php else : ?>
@@ -125,7 +125,7 @@
         $('#station-search-form').bind('submit',function(e) {
             var q = $('#station-search-form-q').val();
             var seconds = $('#station-search-form-seconds').val();
-	    loadView('/views/search.php?imperialUnits=<?php echo $_GET['imperialUnits'] ?? '0'; ?>&q=' + q + '&seconds=' + seconds);
+	    loadView('/views/search.php?imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? '0', ENT_QUOTES, 'UTF-8'); ?>&q=' + q + '&seconds=' + seconds);
             e.preventDefault();
         });
     });

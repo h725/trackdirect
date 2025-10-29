@@ -19,21 +19,21 @@
         $pages = ceil($count / $rows);
     ?>
 
-    <title><?php echo $station->name; ?> Raw Packets</title>
+    <title><?php echo htmlspecialchars($station->name, ENT_QUOTES, 'UTF-8'); ?> Raw Packets</title>
     <div class="modal-inner-content">
         <div class="modal-inner-content-menu">
-            <a class="tdlink" title="Overview" href="/views/overview.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Overview</a>
-            <a class="tdlink" title="Statistics" href="/views/statistics.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Statistics</a>
-            <a class="tdlink" title="Trail Chart" href="/views/trail.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Trail Chart</a>
-            <a class="tdlink" title="Weather" href="/views/weather.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Weather</a>
-            <a class="tdlink" title="Telemetry" href="/views/telemetry.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Telemetry</a>
+            <a class="tdlink" title="Overview" href="/views/overview.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8') ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Overview</a>
+            <a class="tdlink" title="Statistics" href="/views/statistics.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8') ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Statistics</a>
+            <a class="tdlink" title="Trail Chart" href="/views/trail.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8') ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Trail Chart</a>
+            <a class="tdlink" title="Weather" href="/views/weather.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8') ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Weather</a>
+            <a class="tdlink" title="Telemetry" href="/views/telemetry.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8') ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Telemetry</a>
             <span>Raw packets</span>
         </div>
 
         <div class="horizontal-line">&nbsp;</div>
 
         <p>
-            This is the latest recevied packets stored in our database for station/object <?php echo $station->name; ?>. If no packets are shown the sender has not sent any packets the latest 24 hours.
+            This is the latest recevied packets stored in our database for station/object <?php echo htmlspecialchars($station->name, ENT_QUOTES, 'UTF-8'); ?>. If no packets are shown the sender has not sent any packets the latest 24 hours.
         </p>
 
         <?php if ($station->sourceId == 5) : ?>
@@ -49,8 +49,8 @@
         <div class="form-container">
             <?php if ($station->stationTypeId == 1) : ?>
                 <select id="raw-category" style="float:left; margin-right: 5px;">
-                    <option <?php echo (($_GET['category'] ?? 1) == 1 ? 'selected' : ''); ?> value="1">Packets regarding <?php echo $station->name; ?></option>
-                    <option <?php echo (($_GET['category'] ?? 1) == 2 ? 'selected' : ''); ?> value="2">Packets sent by <?php echo $station->name; ?></option>
+                    <option <?php echo (($_GET['category'] ?? 1) == 1 ? 'selected' : ''); ?> value="1">Packets regarding <?php echo htmlspecialchars($station->name, ENT_QUOTES, 'UTF-8'); ?></option>
+                    <option <?php echo (($_GET['category'] ?? 1) == 2 ? 'selected' : ''); ?> value="2">Packets sent by <?php echo htmlspecialchars($station->name, ENT_QUOTES, 'UTF-8'); ?></option>
                 </select>
             <?php endif; ?>
 
@@ -70,11 +70,11 @@
 
         <?php if ($pages > 1): ?>
             <div class="pagination">
-              <a class="tdlink" href="/views/raw.php?id=<?php echo $station->id; ?>&category=<?php echo ($_GET['category'] ?? 1) ?>&type=<?php echo ($_GET['type'] ?? 1); ?>&rows=<?php echo $rows; ?>&page=1"><<</a>
+              <a class="tdlink" href="/views/raw.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&category=<?php echo htmlspecialchars(($_GET['category'] ?? 1), ENT_QUOTES, 'UTF-8'); ?>&type=<?php echo htmlspecialchars(($_GET['type'] ?? 1), ENT_QUOTES, 'UTF-8'); ?>&rows=<?php echo $rows; ?>&page=1"><<</a>
               <?php for($i = max(1, $page - 3); $i <= min($pages, $page + 3); $i++) : ?>
-              <a href="/views/raw.php?id=<?php echo $station->id; ?>&category=<?php echo ($_GET['category'] ?? 1) ?>&type=<?php echo ($_GET['type'] ?? 1); ?>&rows=<?php echo $rows; ?>&page=<?php echo $i; ?>" <?php echo ($i == $page ? 'class="tdlink active"': 'class="tdlink"')?>><?php echo $i ?></a>
+              <a href="/views/raw.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&category=<?php echo htmlspecialchars(($_GET['category'] ?? 1), ENT_QUOTES, 'UTF-8'); ?>&type=<?php echo htmlspecialchars(($_GET['type'] ?? 1), ENT_QUOTES, 'UTF-8'); ?>&rows=<?php echo $rows; ?>&page=<?php echo $i; ?>" <?php echo ($i == $page ? 'class="tdlink active"': 'class="tdlink"')?>><?php echo $i ?></a>
               <?php endfor; ?>
-              <a class="tdlink" href="/views/raw.php?id=<?php echo $station->id; ?>&category=<?php echo ($_GET['category'] ?? 1) ?>&type=<?php echo ($_GET['type'] ?? 1); ?>&rows=<?php echo $rows; ?>&page=<?php echo $pages; ?>">>></a>
+              <a class="tdlink" href="/views/raw.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&category=<?php echo (htmlspecialchars(($_GET['category'] ?? 1) , ENT_QUOTES, 'UTF-8'); ?>&type=<?php echo htmlspecialchars(($_GET['type'] ?? 1) , ENT_QUOTES, 'UTF-8'); ?>&rows=<?php echo $rows; ?>&page=<?php echo htmlspecialchars($pages , ENT_QUOTES, 'UTF-8'); ?>">>></a>
             </div>
         <?php endif; ?>
 
@@ -82,7 +82,7 @@
             <?php foreach (array_slice($packets, 0, $rows) as $packet) : ?>
                 <?php if (($_GET['type'] ?? 1) == 1) : ?>
                     <p>
-                        <span class="raw-packet-timestamp"><?php echo $packet->timestamp; ?></span>:
+                        <span class="raw-packet-timestamp"><?php echo htmlspecialchars($packet->timestamp, ENT_QUOTES, 'UTF-8'); ?></span>:
 
                         <?php if (in_array($packet->mapId, Array(3, 6))) : ?>
                         <span class="raw-packet-error">
@@ -112,7 +112,7 @@
                                             <?php else : ?>
                                             <span>
                                             <?php endif; ?>
-                                                <span class="raw-packet-timestamp"><?php echo $packet->timestamp; ?></span>
+                                                <span class="raw-packet-timestamp"><?php echo htmlspecialchars($packet->timestamp, ENT_QUOTES, 'UTF-8'); ?></span>
 
                                                 <?php if ($packet->mapId == 3) : ?>
                                                 &nbsp;<b>[Duplicate]</b>
@@ -131,7 +131,7 @@
                                         </td>
                                     </tr>
 
-                                    <tr><td>Packet type</td><td><?php echo $packet->getPacketTypeName(); ?></td></tr>
+                                    <tr><td>Packet type</td><td><?php echo htmlspecialchars($packet->getPacketTypeName(), ENT_QUOTES, 'UTF-8'); ?></td></tr>
 
                                     <?php if ($packet->getStationObject()->stationTypeId == 2) : ?>
                                         <tr><td>Object/Item name</td><td><?php echo htmlspecialchars($packet->getStationObject()->name); ?></td></tr>
@@ -146,7 +146,7 @@
                                     <tr><td>Path</td><td><?php echo htmlspecialchars($packet->rawPath); ?></td></tr>
 
                                     <?php if ($packet->reportedTimestamp != null) : ?>
-                                        <tr><td>Reported time</td><td><?php echo $packet->reportedTimestamp; ?> - <span class="raw-packet-timestamp"><?php echo $packet->reportedTimestamp; ?></span></td></tr>
+                                        <tr><td>Reported time</td><td><?php echo htmlspecialchars($packet->reportedTimestamp, ENT_QUOTES, 'UTF-8'); ?> - <span class="raw-packet-timestamp"><?php echo htmlspecialchars($packet->reportedTimestamp, ENT_QUOTES, 'UTF-8'); ?></span></td></tr>
                                     <?php endif; ?>
 
                                     <?php if ($packet->latitude != null && $packet->longitude != null) : ?>
@@ -163,19 +163,19 @@
                                         <?php if (isImperialUnitUser()) : ?>
                                             <tr><td>Speed</td><td><?php echo convertKilometerToMile($packet->speed); ?> mph</td></tr>
                                         <?php else : ?>
-                                            <tr><td>Speed</td><td><?php echo $packet->speed; ?> km/h</td></tr>
+                                            <tr><td>Speed</td><td><?php echo htmlspecialchars($packet->speed, ENT_QUOTES, 'UTF-8'); ?> km/h</td></tr>
                                         <?php endif; ?>
                                     <?php endif; ?>
 
                                     <?php if ($packet->course != null) : ?>
-                                        <tr><td>Course</td><td><?php echo $packet->course; ?>°</td></tr>
+                                        <tr><td>Course</td><td><?php echo htmlspecialchars($packet->course, ENT_QUOTES, 'UTF-8'); ?>°</td></tr>
                                     <?php endif; ?>
 
                                     <?php if ($packet->altitude != null) : ?>
                                         <?php if (isImperialUnitUser()) : ?>
                                             <tr><td>Altitude</td><td><?php echo convertMeterToFeet($packet->altitude); ?> ft</td></tr>
                                         <?php else : ?>
-                                            <tr><td>Altitude</td><td><?php echo $packet->altitude; ?> m</td></tr>
+                                            <tr><td>Altitude</td><td><?php echo htmlspecialchars($packet->altitude, ENT_QUOTES, 'UTF-8'); ?> m</td></tr>
                                         <?php endif; ?>
                                     <?php endif; ?>
 
@@ -195,14 +195,14 @@
 
                                     <?php if ($packet->phg != null) : ?>
                                         <?php if (isImperialUnitUser()) : ?>
-                                            <tr><td>PHG</td><td><?php echo $packet->phg; ?> (Calculated range: <?php echo round(convertKilometerToMile($packet->getPHGRange()/1000),2); ?> miles)</td></tr>
+                                            <tr><td>PHG</td><td><?php echo htmlspecialchars($packet->phg, ENT_QUOTES, 'UTF-8'); ?> (Calculated range: <?php echo round(convertKilometerToMile($packet->getPHGRange()/1000),2); ?> miles)</td></tr>
                                         <?php else : ?>
-                                            <tr><td>PHG</td><td><?php echo $packet->phg; ?> (Calculated range: <?php echo round($packet->getPHGRange()/1000,2); ?> km)</td></tr>
+                                            <tr><td>PHG</td><td><?php echo htmlspecialchars($packet->phg, ENT_QUOTES, 'UTF-8'); ?> (Calculated range: <?php echo round($packet->getPHGRange()/1000,2); ?> km)</td></tr>
                                         <?php endif; ?>
                                     <?php endif; ?>
 
                                     <?php if ($packet->rng != null) : ?>
-                                        <tr><td>RNG</td><td><?php echo $packet->rng; ?></td></tr>
+                                        <tr><td>RNG</td><td><?php echo htmlspecialchars($packet->rng, ENT_QUOTES, 'UTF-8'); ?></td></tr>
                                     <?php endif; ?>
 
                                     <?php if ($station->latestWeatherPacketTimestamp !== null) : ?>
@@ -215,7 +215,7 @@
                                                         <tbody>
                                                             <?php if ($weather->wxRawTimestamp !== null) : ?>
                                                                 <tr>
-                                                                    <td>Time:</td><td><span class="raw-packet-timestamp"><?php echo $weather->wxRawTimestamp; ?></span></td>
+                                                                    <td>Time:</td><td><span class="raw-packet-timestamp"><?php echo htmlspecialchars($weather->wxRawTimestamp, ENT_QUOTES, 'UTF-8'); ?></span></td>
                                                                 </tr>
                                                             <?php endif; ?>
 
@@ -233,7 +233,7 @@
                                                             <?php if ($weather->humidity !== null) : ?>
                                                                 <tr>
                                                                     <td>Humidity:</td>
-                                                                    <td><?php echo $weather->humidity; ?>%</td>
+                                                                    <td><?php echo htmlspecialchars($weather->humidity, ENT_QUOTES, 'UTF-8'); ?>%</td>
                                                                 </tr>
                                                             <?php endif; ?>
 
@@ -285,7 +285,7 @@
                                                                 <?php if ($weather->wind_speed !== null && $weather->wind_speed > 0) : ?>
                                                                     <tr>
                                                                         <td>Wind Speed:</td>
-                                                                        <td><?php echo round(convertMpsToMph($weather->wind_speed), 2); ?> mph, <?php echo $weather->wind_direction; ?>&deg;</td>
+                                                                        <td><?php echo round(convertMpsToMph($weather->wind_speed), 2); ?> mph, <?php echo htmlspecialchars($weather->wind_direction, ENT_QUOTES, 'UTF-8'); ?>&deg;</td>
                                                                     </tr>
                                                                 <?php elseif($weather->wind_speed !== null) : ?>
                                                                     <tr>
@@ -298,7 +298,7 @@
                                                                 <?php if ($weather->wind_speed !== null && $weather->wind_speed > 0) : ?>
                                                                     <tr>
                                                                         <td>Wind Speed:</td>
-                                                                        <td><?php echo round($weather->wind_speed, 2); ?> m/s, <?php echo $weather->wind_direction; ?>&deg;</td>
+                                                                        <td><?php echo round($weather->wind_speed, 2); ?> m/s, <?php echo htmlspecialchars($weather->wind_direction, ENT_QUOTES, 'UTF-8'); ?>&deg;</td>
                                                                     </tr>
                                                                 <?php elseif($weather->wind_speed !== null) : ?>
                                                                     <tr>
@@ -360,7 +360,7 @@
                                                                 <?php for ($i = 1; $i<=8; $i++) : ?>
                                                                     <tr>
                                                                         <td><?php echo htmlspecialchars($telemetry->getBitParameterName($i)); ?>:</td>
-                                                                        <td><?php echo $telemetry->getBit($i); ?></td>
+                                                                        <td><?php echo htmlspecialchars($telemetry->getBit($i), ENT_QUOTES, 'UTF-8'); ?></td>
                                                                     </tr>
                                                                 <?php endfor; ?>
                                                             </tbody>
@@ -417,7 +417,7 @@
                                             <tr>
                                                 <td>Signal to Noise Ratio</td>
                                                 <td>
-                                                    <?php echo $packet->getPacketOgn()->ognSignalToNoiseRatio; ?> dB
+                                                    <?php echo htmlspecialchars($packet->getPacketOgn()->ognSignalToNoiseRatio, ENT_QUOTES, 'UTF-8'); ?> dB
                                                 </td>
                                             </tr>
                                         <?php endif;?>
@@ -426,7 +426,7 @@
                                             <tr>
                                                 <td>Bits corrected</td>
                                                 <td>
-                                                    <?php echo $packet->getPacketOgn()->ognBitErrorsCorrected; ?>
+                                                    <?php echo htmlspecialchars($packet->getPacketOgn()->ognBitErrorsCorrected, ENT_QUOTES, 'UTF-8'); ?>
                                                 </td>
                                             </tr>
                                         <?php endif;?>
@@ -435,7 +435,7 @@
                                             <tr>
                                                 <td>Frequency Offset</td>
                                                 <td>
-                                                    <?php echo $packet->getPacketOgn()->ognFrequencyOffset; ?> kHz
+                                                    <?php echo htmlspecialchars($packet->getPacketOgn()->ognFrequencyOffset, ENT_QUOTES, 'UTF-8'); ?> kHz
                                                 </td>
                                             </tr>
                                         <?php endif;?>
@@ -444,7 +444,7 @@
                                             <tr>
                                                 <td>Climb Rate</td>
                                                 <td>
-                                                    <?php echo $packet->getPacketOgn()->ognClimbRate; ?> fpm
+                                                    <?php echo htmlspecialchars($packet->getPacketOgn()->ognClimbRate, ENT_QUOTES, 'UTF-8'); ?> fpm
                                                 </td>
                                             </tr>
                                         <?php endif;?>
@@ -453,7 +453,7 @@
                                             <tr>
                                                 <td>Turn Rate</td>
                                                 <td>
-                                                    <?php echo $packet->getPacketOgn()->ognTurnRate; ?> fpm
+                                                    <?php echo htmlspecialchars($packet->getPacketOgn()->ognTurnRate, ENT_QUOTES, 'UTF-8'); ?> fpm
                                                 </td>
                                             </tr>
                                         <?php endif;?>
@@ -485,22 +485,22 @@
             });
 
             $('#raw-category').change(function () {
-                loadView("/views/raw.php?id=<?php echo $station->id ?>&type=" + $('#raw-type').val() + "&category=" + $('#raw-category').val() + "&rows=" + $('#raw-rows').val() + "&page=1");
+                loadView("/views/raw.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&type=" + $('#raw-type').val() + "&category=" + $('#raw-category').val() + "&rows=" + $('#raw-rows').val() + "&page=1");
             });
 
             $('#raw-type').change(function () {
-                loadView("/views/raw.php?id=<?php echo $station->id ?>&type=" + $('#raw-type').val() + "&category=" + $('#raw-category').val() + "&rows=" + $('#raw-rows').val() + "&page=1");
+                loadView("/views/raw.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&type=" + $('#raw-type').val() + "&category=" + $('#raw-category').val() + "&rows=" + $('#raw-rows').val() + "&page=1");
             });
 
             $('#raw-rows').change(function () {
-                loadView("/views/raw.php?id=<?php echo $station->id ?>&type=" + $('#raw-type').val() + "&category=" + $('#raw-category').val() + "&rows=" + $('#raw-rows').val() + "&page=1");
+                loadView("/views/raw.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&type=" + $('#raw-type').val() + "&category=" + $('#raw-category').val() + "&rows=" + $('#raw-rows').val() + "&page=1");
             });
 
             if (window.trackdirect) {
                 <?php if ($station->latestConfirmedLatitude != null && $station->latestConfirmedLongitude != null) : ?>
                     window.trackdirect.addListener("map-created", function() {
-                        if (!window.trackdirect.focusOnStation(<?php echo $station->id ?>, true)) {
-                            window.trackdirect.setCenter(<?php echo $station->latestConfirmedLatitude ?>, <?php echo $station->latestConfirmedLongitude ?>);
+                        if (!window.trackdirect.focusOnStation(<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>, true)) {
+                            window.trackdirect.setCenter(<?php echo htmlspecialchars($station->latestConfirmedLatitude, ENT_QUOTES, 'UTF-8'); ?>, <?php echo htmlspecialchars($station->latestConfirmedLongitude, ENT_QUOTES, 'UTF-8'); ?>);
                         }
                     });
                 <?php endif; ?>

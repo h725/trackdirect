@@ -16,22 +16,22 @@
         $pages = ceil($count / $rows);
     ?>
 
-    <title><?php echo $station->name; ?> Telemetry</title>
+    <title><?php echo htmlspecialchars($station->name, ENT_QUOTES, 'UTF-8'); ?> Telemetry</title>
     <div class="modal-inner-content">
         <div class="modal-inner-content-menu">
-            <a class="tdlink" title="Overview" href="/views/overview.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Overview</a>
-            <a class="tdlink" title="Statistics" href="/views/statistics.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Statistics</a>
-            <a class="tdlink" title="Trail Chart" href="/views/trail.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Trail Chart</a>
-            <a class="tdlink" title="Weather" href="/views/weather.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Weather</a>
+            <a class="tdlink" title="Overview" href="/views/overview.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Overview</a>
+            <a class="tdlink" title="Statistics" href="/views/statistics.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Statistics</a>
+            <a class="tdlink" title="Trail Chart" href="/views/trail.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Trail Chart</a>
+            <a class="tdlink" title="Weather" href="/views/weather.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Weather</a>
             <span>Telemetry</span>
-            <a class="tdlink" title="Raw packets" href="/views/raw.php?id=<?php echo $station->id ?>&imperialUnits=<?php echo $_GET['imperialUnits'] ?? 0; ?>">Raw packets</a>
+            <a class="tdlink" title="Raw packets" href="/views/raw.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>">Raw packets</a>
         </div>
 
         <div class="horizontal-line">&nbsp;</div>
 
         <?php if (count($telemetryPackets) > 0) : ?>
 
-            <p>This is the latest recevied telemetry packets stored in our database for station/object <?php echo $station->name; ?>. If no packets are shown the sender has not sent any telemetry packets the latest <?php echo $maxDays; ?> day(s).</p>
+            <p>This is the latest recevied telemetry packets stored in our database for station/object <?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>. If no packets are shown the sender has not sent any telemetry packets the latest <?php echo $maxDays; ?> day(s).</p>
             <p>Telemetry packets is used to share measurements like repeteater parameters, battery voltage, radiation readings (or any other measurements).</p>
 
             <div class="form-container">
@@ -51,11 +51,11 @@
 
             <?php if ($pages > 1): ?>
                 <div class="pagination">
-                  <a class="tdlink" href="/views/telemetry.php?id=<?php echo $station->id; ?>&category=<?php echo ($_GET['category'] ?? 1); ?>&rows=<?php echo $rows; ?>&page=1"><<</a>
+                  <a class="tdlink" href="/views/telemetry.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&category=<?php echo htmlspecialchars(($_GET['category'] ?? 1), ENT_QUOTES, 'UTF-8'); ?>&rows=<?php echo $rows; ?>&page=1"><<</a>
                   <?php for($i = max(1, $page - 3); $i <= min($pages, $page + 3); $i++) : ?>
-                  <a href="/views/telemetry.php?id=<?php echo $station->id; ?>&category=<?php echo ($_GET['category'] ?? 1); ?>&rows=<?php echo $rows; ?>&page=<?php echo $i; ?>" <?php echo ($i == $page ? 'class="tdlink active"': 'class="tdlink"')?>><?php echo $i ?></a>
+                  <a href="/views/telemetry.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&category=<?php echo htmlspecialchars(($_GET['category'] ?? 1), ENT_QUOTES, 'UTF-8'); ?>&rows=<?php echo $rows; ?>&page=<?php echo $i; ?>" <?php echo ($i == $page ? 'class="tdlink active"': 'class="tdlink"')?>><?php echo $i ?></a>
                   <?php endfor; ?>
-                  <a class="tdlink" href="/views/telemetry.php?id=<?php echo $station->id; ?>&category=<?php echo ($_GET['category'] ?? 1); ?>&rows=<?php echo $rows; ?>&page=<?php echo $pages; ?>">>></a>
+                  <a class="tdlink" href="/views/telemetry.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&category=<?php echo htmlspecialchars(($_GET['category'] ?? 1), ENT_QUOTES, 'UTF-8'); ?>&rows=<?php echo $rows; ?>&page=<?php echo htmlspecialchars($pages, ENT_QUOTES, 'UTF-8'); ?>">>></a>
                 </div>
             <?php endif; ?>
 
@@ -77,39 +77,39 @@
 
                         <tr>
                             <td class="telemetrytime">
-                                <?php echo ($packetTelemetry->wxRawTimestamp != null?$packetTelemetry->wxRawTimestamp:$packetTelemetry->timestamp); ?>
+                                <?php echo htmlspecialchars(($packetTelemetry->wxRawTimestamp != null?$packetTelemetry->wxRawTimestamp:$packetTelemetry->timestamp), ENT_QUOTES, 'UTF-8'); ?>
                             </td>
                             <td>
                                 <?php if ($packetTelemetry->val1 !== null) : ?>
-                                    <?php echo round($packetTelemetry->getValue(1), 2); ?> <?php echo htmlspecialchars($packetTelemetry->getValueUnit(1)); ?>
+                                    <?php echo htmlspecialchars(round($packetTelemetry->getValue(1), 2), ENT_QUOTES, 'UTF-8'); ?> <?php echo htmlspecialchars($packetTelemetry->getValueUnit(1)); ?>
                                 <?php else : ?>
                                     -
                                 <?php endif; ?>
                             </td>
                             <td>
                                 <?php if ($packetTelemetry->val1 !== null) : ?>
-                                    <?php echo round($packetTelemetry->getValue(2), 2); ?> <?php echo htmlspecialchars($packetTelemetry->getValueUnit(2)); ?>
+                                    <?php echo htmlspecialchars(round($packetTelemetry->getValue(2), 2), ENT_QUOTES, 'UTF-8'); ?> <?php echo htmlspecialchars($packetTelemetry->getValueUnit(2)); ?>
                                 <?php else : ?>
                                     -
                                 <?php endif; ?>
                             </td>
                             <td>
                                 <?php if ($packetTelemetry->val1 !== null) : ?>
-                                    <?php echo round($packetTelemetry->getValue(3), 2); ?> <?php echo htmlspecialchars($packetTelemetry->getValueUnit(3)); ?>
+                                    <?php echo htmlspecialchars(round($packetTelemetry->getValue(3), 2), ENT_QUOTES, 'UTF-8'); ?> <?php echo htmlspecialchars($packetTelemetry->getValueUnit(3)); ?>
                                 <?php else : ?>
                                     -
                                 <?php endif; ?>
                             </td>
                             <td>
                                 <?php if ($packetTelemetry->val1 !== null) : ?>
-                                    <?php echo round($packetTelemetry->getValue(4), 2); ?> <?php echo htmlspecialchars($packetTelemetry->getValueUnit(4)); ?>
+                                    <?php echo htmlspecialchars(round($packetTelemetry->getValue(4), 2), ENT_QUOTES, 'UTF-8'); ?> <?php echo htmlspecialchars($packetTelemetry->getValueUnit(4)); ?>
                                 <?php else : ?>
                                     -
                                 <?php endif; ?>
                             </td>
                             <td>
                                 <?php if ($packetTelemetry->val1 !== null) : ?>
-                                    <?php echo round($packetTelemetry->getValue(5), 2); ?> <?php echo htmlspecialchars($packetTelemetry->getValueUnit(5)); ?>
+                                    <?php echo htmlspecialchars(round($packetTelemetry->getValue(5), 2), ENT_QUOTES, 'UTF-8'); ?> <?php echo htmlspecialchars($packetTelemetry->getValueUnit(5)); ?>
                                 <?php else : ?>
                                     -
                                 <?php endif; ?>
@@ -127,19 +127,19 @@
                         *Used Equation Coefficients:
                     </div>
                     <div>
-                        <?php echo htmlspecialchars($latestPacketTelemetry->getValueParameterName(1)); ?>: <?php echo implode(', ', $latestPacketTelemetry->getEqnsValue(1)); ?>
+                        <?php echo htmlspecialchars($latestPacketTelemetry->getValueParameterName(1)); ?>: <?php echo htmlspecialchars(implode(', ', $latestPacketTelemetry->getEqnsValue(1)), ENT_QUOTES, 'UTF-8'); ?>
                     </div>
                     <div>
-                        <?php echo htmlspecialchars($latestPacketTelemetry->getValueParameterName(2)); ?>: <?php echo implode(', ', $latestPacketTelemetry->getEqnsValue(2)); ?>
+                        <?php echo htmlspecialchars($latestPacketTelemetry->getValueParameterName(2)); ?>: <?php echo htmlspecialchars(implode(', ', $latestPacketTelemetry->getEqnsValue(2)), ENT_QUOTES, 'UTF-8'); ?>
                     </div>
                     <div>
-                        <?php echo htmlspecialchars($latestPacketTelemetry->getValueParameterName(3)); ?>: <?php echo implode(', ', $latestPacketTelemetry->getEqnsValue(3)); ?>
+                        <?php echo htmlspecialchars($latestPacketTelemetry->getValueParameterName(3)); ?>: <?php echo htmlspecialchars(implode(', ', $latestPacketTelemetry->getEqnsValue(3)), ENT_QUOTES, 'UTF-8'); ?>
                     </div>
                     <div>
-                        <?php echo htmlspecialchars($latestPacketTelemetry->getValueParameterName(4)); ?>: <?php echo implode(', ', $latestPacketTelemetry->getEqnsValue(4)); ?>
+                        <?php echo htmlspecialchars($latestPacketTelemetry->getValueParameterName(4)); ?>: <?php echo htmlspecialchars(implode(', ', $latestPacketTelemetry->getEqnsValue(4)), ENT_QUOTES, 'UTF-8'); ?>
                     </div>
                     <div>
-                        <?php echo htmlspecialchars($latestPacketTelemetry->getValueParameterName(5)); ?>: <?php echo implode(', ', $latestPacketTelemetry->getEqnsValue(5)); ?>
+                        <?php echo htmlspecialchars($latestPacketTelemetry->getValueParameterName(5)); ?>: <?php echo htmlspecialchars(implode(', ', $latestPacketTelemetry->getEqnsValue(5)), ENT_QUOTES, 'UTF-8'); ?>
                     </div>
                 </div>
             </div>
@@ -166,7 +166,7 @@
                             <?php if ($packetTelemetry->bits !== null && $i >= 2 ) : ?>
                             <tr>
                                 <td class="telemetrytime">
-                                    <?php echo $packetTelemetry->timestamp; ?>
+                                    <?php echo htmlspecialchars($packetTelemetry->timestamp, ENT_QUOTES, 'UTF-8'); ?>
                                 </td>
                                 <td>
                                     <div class="<?php echo ($packetTelemetry->getBit(1) == 1?'telemetry-biton':'telemetry-bitoff'); ?>">
@@ -221,14 +221,14 @@
                             *Used Bit Sense:
                         </div>
                         <div>
-                            <?php echo $latestPacketTelemetry->getBitSense(1); ?>
-                            <?php echo $latestPacketTelemetry->getBitSense(2); ?>
-                            <?php echo $latestPacketTelemetry->getBitSense(3); ?>
-                            <?php echo $latestPacketTelemetry->getBitSense(4); ?>
-                            <?php echo $latestPacketTelemetry->getBitSense(5); ?>
-                            <?php echo $latestPacketTelemetry->getBitSense(6); ?>
-                            <?php echo $latestPacketTelemetry->getBitSense(7); ?>
-                            <?php echo $latestPacketTelemetry->getBitSense(8); ?>
+                            <?php echo htmlspecialchars($latestPacketTelemetry->getBitSense(1), ENT_QUOTES, 'UTF-8'); ?>
+                            <?php echo htmlspecialchars($latestPacketTelemetry->getBitSense(2), ENT_QUOTES, 'UTF-8'); ?>
+                            <?php echo htmlspecialchars($latestPacketTelemetry->getBitSense(3), ENT_QUOTES, 'UTF-8'); ?>
+                            <?php echo htmlspecialchars($latestPacketTelemetry->getBitSense(4), ENT_QUOTES, 'UTF-8'); ?>
+                            <?php echo htmlspecialchars($latestPacketTelemetry->getBitSense(5), ENT_QUOTES, 'UTF-8'); ?>
+                            <?php echo htmlspecialchars($latestPacketTelemetry->getBitSense(6), ENT_QUOTES, 'UTF-8'); ?>
+                            <?php echo htmlspecialchars($latestPacketTelemetry->getBitSense(7), ENT_QUOTES, 'UTF-8'); ?>
+                            <?php echo htmlspecialchars($latestPacketTelemetry->getBitSense(8), ENT_QUOTES, 'UTF-8'); ?>
                         </div>
                     </div>
                 </div>
@@ -266,18 +266,18 @@
             });
 
             $('#telemetry-category').change(function () {
-                loadView("/views/telemetry.php?id=<?php echo $station->id ?>&category=" + $('#telemetry-category').val() + "&rows=" + $('#telemetry-rows').val() + "&page=1");
+                loadView("/views/telemetry.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&category=" + $('#telemetry-category').val() + "&rows=" + $('#telemetry-rows').val() + "&page=1");
             });
 
             $('#telemetry-rows').change(function () {
-                loadView("/views/telemetry.php?id=<?php echo $station->id ?>&category=" + $('#telemetry-category').val() + "&rows=" + $('#telemetry-rows').val() + "&page=1");
+                loadView("/views/telemetry.php?id=<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>&category=" + $('#telemetry-category').val() + "&rows=" + $('#telemetry-rows').val() + "&page=1");
             });
 
             if (window.trackdirect) {
                 <?php if ($station->latestConfirmedLatitude != null && $station->latestConfirmedLongitude != null) : ?>
                     window.trackdirect.addListener("map-created", function() {
-                        if (!window.trackdirect.focusOnStation(<?php echo $station->id ?>, true)) {
-                            window.trackdirect.setCenter(<?php echo $station->latestConfirmedLatitude ?>, <?php echo $station->latestConfirmedLongitude ?>);
+                        if (!window.trackdirect.focusOnStation(<?php echo htmlspecialchars($station->id, ENT_QUOTES, 'UTF-8'); ?>, true)) {
+                            window.trackdirect.setCenter(<?php echo htmlspecialchars($station->latestConfirmedLatitude, ENT_QUOTES, 'UTF-8'); ?>, <?php echo htmlspecialchars($station->latestConfirmedLongitude, ENT_QUOTES, 'UTF-8'); ?>);
                         }
                     });
                 <?php endif; ?>
