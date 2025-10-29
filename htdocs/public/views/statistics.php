@@ -45,7 +45,7 @@
                         <?php $otherStation = StationRepository::getInstance()->getObjectById($stats["station_id"]) ?>
                         <tr>
                             <td>
-                                <img alt="Symbol" src="<?php echo $otherStation->getIconFilePath(22, 22); ?>" style="vertical-align: middle;"/>&nbsp;
+                                <img alt="Symbol" src="<?php echo htmlspecialchars($otherStation->getIconFilePath(22, 22), ENT_QUOTES, 'UTF-8'); ?>" style="vertical-align: middle;"/>&nbsp;
                                 <a class="tdlink" href="/views/overview.php?id=<?php echo htmlspecialchars($otherStation->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlentities($otherStation->name) ?></a>
                             </td>
                             <td>
@@ -58,9 +58,9 @@
                             <td class="longest-distance">
                                 <?php if ($stats["longest_distance"] !== null) : ?>
                                     <?php if (isImperialUnitUser()) : ?>
-                                        <?php echo round(convertKilometerToMile($stats["longest_distance"] / 1000), 2); ?> miles
+                                        <?php echo htmlspecialchars(round(convertKilometerToMile($stats["longest_distance"] / 1000), 2), ENT_QUOTES, 'UTF-8'); ?> miles
                                     <?php else : ?>
-                                        <?php echo round($stats["longest_distance"] / 1000, 2); ?> km
+                                        <?php echo htmlspecialchars(round($stats["longest_distance"] / 1000, 2), ENT_QUOTES, 'UTF-8'); ?> km
                                     <?php endif; ?>
                                 <?php else : ?>
                                     &nbsp;
@@ -92,7 +92,7 @@
                         <?php $otherStation = StationRepository::getInstance()->getObjectById($stats["station_id"]) ?>
                         <tr>
                             <td>
-                                <img alt="Symbol" src="<?php echo $otherStation->getIconFilePath(22, 22); ?>" style="vertical-align: middle;"/>&nbsp;
+                                <img alt="Symbol" src="<?php echo htmlspecialchars($otherStation->getIconFilePath(22, 22), ENT_QUOTES, 'UTF-8'); ?>" style="vertical-align: middle;"/>&nbsp;
                                 <a class="tdlink" href="/views/overview.php?id=<?php echo htmlspecialchars($otherStation->id, ENT_QUOTES, 'UTF-8');; ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlentities($otherStation->name) ?></a>
 
                             </td>
@@ -105,9 +105,9 @@
                             <td class="longest-distance">
                                 <?php if ($stats["longest_distance"] !== null) : ?>
                                     <?php if (isImperialUnitUser()) : ?>
-                                        <?php echo round(convertKilometerToMile($stats["longest_distance"] / 1000), 2); ?> miles
+                                        <?php echo htmlspecialchars(round(convertKilometerToMile($stats["longest_distance"] / 1000), 2), ENT_QUOTES, 'UTF-8'); ?> miles
                                     <?php else : ?>
-                                        <?php echo round($stats["longest_distance"] / 1000, 2); ?> km
+                                        <?php echo htmlspecialchars(round($stats["longest_distance"] / 1000, 2), ENT_QUOTES, 'UTF-8'); ?> km
                                     <?php endif; ?>
                                 <?php else : ?>
                                     &nbsp;
