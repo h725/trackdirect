@@ -68,7 +68,7 @@
                 <?php foreach ($stations as $foundStation) : ?>
                     <tr>
                         <td>
-                            <img src="<?php echo $foundStation->getIconFilePath(22, 22); ?>" alt="Symbol"/>
+                            <img src="<?php echo htmlspecialchars($foundStation->getIconFilePath(22, 22), ENT_QUOTES, 'UTF-8'); ?>" alt="Symbol"/>
                         </td>
                         <td>
                             <a class="tdlink" href="/views/overview.php?id=<?php echo htmlspecialchars($foundStation->id, ENT_QUOTES, 'UTF-8'); ?>&imperialUnits=<?php echo htmlspecialchars($_GET['imperialUnits'] ?? 0, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlentities($foundStation->name) ?></a>

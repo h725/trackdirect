@@ -150,8 +150,8 @@
                                     <?php endif; ?>
 
                                     <?php if ($packet->latitude != null && $packet->longitude != null) : ?>
-                                        <tr><td>Latitude</td><td><?php echo round($packet->latitude, 5); ?></td></tr>
-                                        <tr><td>Longitude</td><td><?php echo round($packet->longitude, 5); ?></td></tr>
+                                        <tr><td>Latitude</td><td><?php echo htmlspecialchars(round($packet->latitude, 5), ENT_QUOTES, 'UTF-8'); ?></td></tr>
+                                        <tr><td>Longitude</td><td><?php echo htmlspecialchars(round($packet->longitude, 5), ENT_QUOTES, 'UTF-8'); ?></td></tr>
                                     <?php endif; ?>
 
                                     <?php if ($packet->symbol != null && $packet->symbolTable != null) : ?>
@@ -161,7 +161,7 @@
 
                                     <?php if ($packet->speed != null) : ?>
                                         <?php if (isImperialUnitUser()) : ?>
-                                            <tr><td>Speed</td><td><?php echo convertKilometerToMile($packet->speed); ?> mph</td></tr>
+                                            <tr><td>Speed</td><td><?php echo htmlspecialchars(convertKilometerToMile($packet->speed), ENT_QUOTES, 'UTF-8'); ?> mph</td></tr>
                                         <?php else : ?>
                                             <tr><td>Speed</td><td><?php echo htmlspecialchars($packet->speed, ENT_QUOTES, 'UTF-8'); ?> km/h</td></tr>
                                         <?php endif; ?>
@@ -173,7 +173,7 @@
 
                                     <?php if ($packet->altitude != null) : ?>
                                         <?php if (isImperialUnitUser()) : ?>
-                                            <tr><td>Altitude</td><td><?php echo convertMeterToFeet($packet->altitude); ?> ft</td></tr>
+                                            <tr><td>Altitude</td><td><?php echo htmlspecialchars(convertMeterToFeet($packet->altitude), ENT_QUOTES, 'UTF-8'); ?> ft</td></tr>
                                         <?php else : ?>
                                             <tr><td>Altitude</td><td><?php echo htmlspecialchars($packet->altitude, ENT_QUOTES, 'UTF-8'); ?> m</td></tr>
                                         <?php endif; ?>
@@ -195,9 +195,9 @@
 
                                     <?php if ($packet->phg != null) : ?>
                                         <?php if (isImperialUnitUser()) : ?>
-                                            <tr><td>PHG</td><td><?php echo htmlspecialchars($packet->phg, ENT_QUOTES, 'UTF-8'); ?> (Calculated range: <?php echo round(convertKilometerToMile($packet->getPHGRange()/1000),2); ?> miles)</td></tr>
+                                            <tr><td>PHG</td><td><?php echo htmlspecialchars($packet->phg, ENT_QUOTES, 'UTF-8'); ?> (Calculated range: <?php echo htmlspecialchars(round(convertKilometerToMile($packet->getPHGRange()/1000),2), ENT_QUOTES, 'UTF-8'); ?> miles)</td></tr>
                                         <?php else : ?>
-                                            <tr><td>PHG</td><td><?php echo htmlspecialchars($packet->phg, ENT_QUOTES, 'UTF-8'); ?> (Calculated range: <?php echo round($packet->getPHGRange()/1000,2); ?> km)</td></tr>
+                                            <tr><td>PHG</td><td><?php echo htmlspecialchars($packet->phg, ENT_QUOTES, 'UTF-8'); ?> (Calculated range: <?php echo htmlspecialchars(round($packet->getPHGRange()/1000,2), ENT_QUOTES, 'UTF-8'); ?> km)</td></tr>
                                         <?php endif; ?>
                                     <?php endif; ?>
 
@@ -223,9 +223,9 @@
                                                                 <tr>
                                                                     <td>Temperature:</td>
                                                                     <?php if (isImperialUnitUser()) : ?>
-                                                                        <td><?php echo round(convertCelciusToFahrenheit($weather->temperature), 2); ?>&deg; F</td>
+                                                                        <td><?php echo htmlspecialchars(round(convertCelciusToFahrenheit($weather->temperature), 2), ENT_QUOTES, 'UTF-8'); ?>&deg; F</td>
                                                                     <?php else : ?>
-                                                                        <td><?php echo round($weather->temperature, 2); ?>&deg; C</td>
+                                                                        <td><?php echo htmlspecialchars(round($weather->temperature, 2), ENT_QUOTES, 'UTF-8'); ?>&deg; C</td>
                                                                     <?php endif; ?>
                                                                 </tr>
                                                             <?php endif; ?>
@@ -241,9 +241,9 @@
                                                                 <tr>
                                                                     <td>Pressure:</td>
                                                                     <?php if (isImperialUnitUser()) : ?>
-                                                                        <td><?php echo round(convertMbarToMmhg($weather->pressure),1); ?> mmHg</td>
+                                                                        <td><?php echo htmlspecialchars(round(convertMbarToMmhg($weather->pressure),1), ENT_QUOTES, 'UTF-8'); ?> mmHg</td>
                                                                     <?php else : ?>
-                                                                        <td><?php echo round($weather->pressure,1); ?> hPa</td>
+                                                                        <td><?php echo htmlspecialchars(round($weather->pressure,1), ENT_QUOTES, 'UTF-8'); ?> hPa</td>
                                                                     <?php endif; ?>
                                                                 </tr>
                                                             <?php endif; ?>
@@ -252,9 +252,9 @@
                                                                 <tr>
                                                                     <td>Rain latest hour:</td>
                                                                     <?php if (isImperialUnitUser()) : ?>
-                                                                        <td><?php echo round(convertMmToInch($weather->rain_1h),2); ?> in</td>
+                                                                        <td><?php echo htmlspecialchars(round(convertMmToInch($weather->rain_1h),2), ENT_QUOTES, 'UTF-8'); ?> in</td>
                                                                     <?php else : ?>
-                                                                        <td><?php echo round($weather->rain_1h,2); ?> mm</td>
+                                                                        <td><?php echo htmlspecialchars(round($weather->rain_1h,2), ENT_QUOTES, 'UTF-8'); ?> mm</td>
                                                                     <?php endif; ?>
                                                                 </tr>
                                                             <?php endif; ?>
@@ -263,9 +263,9 @@
                                                                 <tr>
                                                                     <td>Rain latest 24h hours:</td>
                                                                     <?php if (isImperialUnitUser()) : ?>
-                                                                        <td><?php echo round(convertMmToInch($weather->rain_24h),2); ?> in</td>
+                                                                        <td><?php echo htmlspecialchars(round(convertMmToInch($weather->rain_24h),2), ENT_QUOTES, 'UTF-8'); ?> in</td>
                                                                     <?php else : ?>
-                                                                        <td><?php echo round($weather->rain_24h,2); ?> mm</td>
+                                                                        <td><?php echo htmlspecialchars(round($weather->rain_24h,2), ENT_QUOTES, 'UTF-8'); ?> mm</td>
                                                                     <?php endif; ?>
                                                                 </tr>
                                                             <?php endif; ?>
@@ -274,9 +274,9 @@
                                                                 <tr>
                                                                     <td>Rain since midnight:</td>
                                                                     <?php if (isImperialUnitUser()) : ?>
-                                                                        <td><?php echo round(convertMmToInch($weather->rain_since_midnight),2); ?> in</td>
+                                                                        <td><?php echo htmlspecialchars(round(convertMmToInch($weather->rain_since_midnight),2), ENT_QUOTES, 'UTF-8'); ?> in</td>
                                                                     <?php else : ?>
-                                                                        <td><?php echo round($weather->rain_since_midnight,2); ?> mm</td>
+                                                                        <td><?php echo htmlspecialchars(round($weather->rain_since_midnight,2), ENT_QUOTES, 'UTF-8'); ?> mm</td>
                                                                     <?php endif; ?>
                                                                 </tr>
                                                             <?php endif; ?>
@@ -285,12 +285,12 @@
                                                                 <?php if ($weather->wind_speed !== null && $weather->wind_speed > 0) : ?>
                                                                     <tr>
                                                                         <td>Wind Speed:</td>
-                                                                        <td><?php echo round(convertMpsToMph($weather->wind_speed), 2); ?> mph, <?php echo htmlspecialchars($weather->wind_direction, ENT_QUOTES, 'UTF-8'); ?>&deg;</td>
+                                                                        <td><?php echo htmlspecialchars(round(convertMpsToMph($weather->wind_speed), 2), ENT_QUOTES, 'UTF-8'); ?> mph, <?php echo htmlspecialchars($weather->wind_direction, ENT_QUOTES, 'UTF-8'); ?>&deg;</td>
                                                                     </tr>
                                                                 <?php elseif($weather->wind_speed !== null) : ?>
                                                                     <tr>
                                                                         <td>Wind Speed:</td>
-                                                                        <td><?php echo round(convertMpsToMph($weather->wind_speed), 2); ?> mph</td>
+                                                                        <td><?php echo htmlspecialchars(round(convertMpsToMph($weather->wind_speed), 2), ENT_QUOTES, 'UTF-8'); ?> mph</td>
                                                                     </tr>
                                                                 <?php endif; ?>
 
@@ -298,28 +298,28 @@
                                                                 <?php if ($weather->wind_speed !== null && $weather->wind_speed > 0) : ?>
                                                                     <tr>
                                                                         <td>Wind Speed:</td>
-                                                                        <td><?php echo round($weather->wind_speed, 2); ?> m/s, <?php echo htmlspecialchars($weather->wind_direction, ENT_QUOTES, 'UTF-8'); ?>&deg;</td>
+                                                                        <td><?php echo htmlspecialchars(round($weather->wind_speed, 2), ENT_QUOTES, 'UTF-8'); ?> m/s, <?php echo htmlspecialchars($weather->wind_direction, ENT_QUOTES, 'UTF-8'); ?>&deg;</td>
                                                                     </tr>
                                                                 <?php elseif($weather->wind_speed !== null) : ?>
                                                                     <tr>
                                                                         <td>Wind Speed:</td>
-                                                                        <td><?php echo round($weather->wind_speed, 2); ?> m/s</td>
+                                                                        <td><?php echo htmlspecialchars(round($weather->wind_speed, 2), ENT_QUOTES, 'UTF-8'); ?> m/s</td>
                                                                     </tr>
                                                                 <?php endif; ?>
                                                             <?php endif; ?>
 
                                                             <?php if ($weather->luminosity !== null) : ?>
                                                                 <tr>
-                                                                    <td>Luminosity:</td><td><?php echo round($weather->luminosity,0); ?> W/m&sup2;</td>
+                                                                    <td>Luminosity:</td><td><?php echo htmlspecialchars(round($weather->luminosity,0), ENT_QUOTES, 'UTF-8'); ?> W/m&sup2;</td>
                                                                 </tr>
                                                             <?php endif; ?>
 
                                                             <?php if ($weather->snow !== null) : ?>
                                                                 <tr>
                                                                 <?php if (isImperialUnitUser()) : ?>
-                                                                    <td>Snow:</td><td><?php echo round(convertMmToInch($weather->snow), 0); ?> in</td>
+                                                                    <td>Snow:</td><td><?php echo htmlspecialchars(round(convertMmToInch($weather->snow), 0), ENT_QUOTES, 'UTF-8'); ?> in</td>
                                                                 <?php else : ?>
-                                                                    <td>Snow:</td><td><?php echo round($weather->snow, 0); ?> mm</td>
+                                                                    <td>Snow:</td><td><?php echo htmlspecialchars(round($weather->snow, 0), ENT_QUOTES, 'UTF-8'); ?> mm</td>
                                                                 <?php endif; ?>
                                                                 </tr>
                                                             <?php endif; ?>
@@ -342,8 +342,8 @@
                                                             <?php for ($i = 1; $i<=5; $i++) : ?>
                                                                 <?php if ($telemetry->isValueSet($i)) : ?>
                                                                     <tr>
-                                                                        <td><?php echo htmlspecialchars($telemetry->getValueParameterName($i)); ?>:</td>
-                                                                        <td><?php echo round($telemetry->getValue($i), 2); ?> <?php echo htmlspecialchars($telemetry->getValueUnit($i)); ?></td>
+                                                                        <td><?php echo htmlspecialchars($telemetry->getValueParameterName($i), ENT_QUOTES, 'UTF-8'); ?>:</td>
+                                                                        <td><?php echo htmlspecialchars(round($telemetry->getValue($i), 2), ENT_QUOTES, 'UTF-8'); ?> <?php echo htmlspecialchars($telemetry->getValueUnit($i), ENT_QUOTES, 'UTF-8'); ?></td>
                                                                     </tr>
                                                                 <?php endif; ?>
                                                             <?php endfor; ?>
