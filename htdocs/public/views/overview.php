@@ -445,15 +445,15 @@
                                     <span>
                                         <?php if (isImperialUnitUser()) : ?>
                                             <?php if (convertMeterToYard($closeByStation->getDistance($station->latestConfirmedLatitude, $station->latestConfirmedLongitude)) < 1000) : ?>
-                                                <?php echo round(convertMeterToYard($closeByStation->getDistance($station->latestConfirmedLatitude, $station->latestConfirmedLongitude)), 0); ?> yd
+                                                <?php echo htmlspecialchars(round(convertMeterToYard($closeByStation->getDistance($station->latestConfirmedLatitude, $station->latestConfirmedLongitude)), 0), ENT_QUOTES, 'UTF-8'); ?> yd
                                             <?php else : ?>
-                                                <?php echo round(convertKilometerToMile($closeByStation->getDistance($station->latestConfirmedLatitude, $station->latestConfirmedLongitude) / 1000), 2); ?> miles
+                                                <?php echo htmlspecialchars(round(convertKilometerToMile($closeByStation->getDistance($station->latestConfirmedLatitude, $station->latestConfirmedLongitude) / 1000), 2), ENT_QUOTES, 'UTF-8'); ?> miles
                                             <?php endif; ?>
                                         <?php else : ?>
                                             <?php if ($closeByStation->getDistance($station->latestConfirmedLatitude, $station->latestConfirmedLongitude) < 1000) : ?>
-                                                <?php echo round($closeByStation->getDistance($station->latestConfirmedLatitude, $station->latestConfirmedLongitude), 0); ?> m
+                                                <?php echo htmlspecialchars(round($closeByStation->getDistance($station->latestConfirmedLatitude, $station->latestConfirmedLongitude), 0), ENT_QUOTES, 'UTF-8'); ?> m
                                             <?php else : ?>
-                                                <?php echo round($closeByStation->getDistance($station->latestConfirmedLatitude, $station->latestConfirmedLongitude) / 1000, 2); ?> km
+                                                <?php echo htmlspecialchars(round($closeByStation->getDistance($station->latestConfirmedLatitude, $station->latestConfirmedLongitude) / 1000, 2), ENT_QUOTES, 'UTF-8'); ?> km
                                             <?php endif; ?>
                                         <?php endif; ?>
                                     </span>
