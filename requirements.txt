@@ -8,3 +8,4 @@ jsmin
 psutil~=6.0.0
 git+https://github.com/rossengeorgiev/aprs-python
 aprslib~=0.7.2
+cryptography>=46.0.5 # not directly required, pinned by Snyk to avoid a vulnerability
